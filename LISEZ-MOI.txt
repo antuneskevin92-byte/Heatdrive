@@ -25,3 +25,5 @@ MISES À JOUR ET DONNÉES
 - Profils, clients, logos, favoris et réglages restent dans le téléphone et sont gardés d'une version à l'autre. Pas besoin de réimporter.
 - La sauvegarde (Paramètres > Sauvegarde) sert seulement à changer de téléphone, ou si on efface les données de Safari ou de Chrome.
 - Toute personne qui a l'adresse peut utiliser l'appli, mais chacun ne voit que ses propres données : rien n'est envoyé ni partagé.
+
+APPLI DE TEST : https://test--heatdrive.netlify.app (version X.XX.0, ne pas diffuser).
