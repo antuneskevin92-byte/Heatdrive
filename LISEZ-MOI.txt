@@ -26,4 +26,4 @@ MISES À JOUR ET DONNÉES
 - La sauvegarde (Paramètres > Sauvegarde) sert seulement à changer de téléphone, ou si on efface les données de Safari ou de Chrome.
 - Toute personne qui a l'adresse peut utiliser l'appli, mais chacun ne voit que ses propres données : rien n'est envoyé ni partagé.
 
-APPLI DE TEST : https://test--heatdrive.netlify.app (version X.XX.0, ne pas diffuser).
+APPLI DE TEST : https://test--heatdrive.netlify.app (version X.XX.0, ne pas diffuser). Version actuelle : 1.01.0 (retour de la Puissance fioul).
