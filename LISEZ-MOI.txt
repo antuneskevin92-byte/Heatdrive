@@ -1,0 +1,27 @@
+HeatDrive en ligne (iPhone, Android, ordinateur)
+
+Ce dossier est l'appli prête à mettre sur une adresse web gratuite.
+Contenu : index.html (l'appli), manifest.webmanifest et sw.js (installation sur l'écran d'accueil et usage hors ligne), icônes.
+
+MISE EN LIGNE (Netlify Drop, le plus simple, environ 5 minutes)
+1. Sur un ordinateur, ouvrir https://app.netlify.com/drop
+2. Créer un compte gratuit (e-mail ou compte Google).
+3. Glisser le DOSSIER heatdrive-web entier dans la zone de dépôt.
+4. Netlify donne une adresse du type https://nom-au-hasard.netlify.app
+   (dans Site configuration > Change site name, on peut la renommer, ex. heatdrive-equipe-sucy).
+5. Mise à jour : Deploys > glisser le nouveau dossier. L'adresse ne change pas.
+
+INSTALLATION SUR IPHONE
+1. Ouvrir l'adresse dans Safari.
+2. Bouton Partager (carré avec flèche) > « Sur l'écran d'accueil » > Ajouter.
+3. Lancer HeatDrive depuis l'icône. Fonctionne ensuite même sans réseau.
+Enregistrer un PDF/Excel/sauvegarde : la feuille de partage s'ouvre > « Enregistrer dans Fichiers » ou Mail.
+
+INSTALLATION SUR ANDROID
+Chrome > menu ⋮ > « Ajouter à l'écran d'accueil » (ou « Installer l'application »).
+
+MISES À JOUR ET DONNÉES
+- Après une nouvelle mise en ligne à la même adresse, l'appli se met à jour toute seule à la prochaine ouverture avec réseau. Rien à refaire sur le téléphone.
+- Profils, clients, logos, favoris et réglages restent dans le téléphone et sont gardés d'une version à l'autre. Pas besoin de réimporter.
+- La sauvegarde (Paramètres > Sauvegarde) sert seulement à changer de téléphone, ou si on efface les données de Safari ou de Chrome.
+- Toute personne qui a l'adresse peut utiliser l'appli, mais chacun ne voit que ses propres données : rien n'est envoyé ni partagé.
