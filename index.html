@@ -3313,7 +3313,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
 
   /* =================== Accueil et modules =================== */
   /* ---------- Modules favoris de l'accueil ---------- */
-  const APP_VER = '72';
+  const APP_VER = '73';
   const MODS = ['simple', 'expert', 'power', 'gas', 'dp', 'flow', 'fod'];
   const HKEY = KEY + '-home';
   let HIDE = (() => { try { const a = JSON.parse(LS.getItem(HKEY) || '[]'); return Array.isArray(a) ? a.filter(m => MODS.includes(m)) : []; } catch (_) { return []; } })();
