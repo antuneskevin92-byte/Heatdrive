@@ -1,6 +1,6 @@
 {
- "name": "HeatDrive",
- "short_name": "HeatDrive",
+ "name": "HeatDrive TEST",
+ "short_name": "HD Test",
  "description": "Outils du chauffagiste : courbes de chauffe, puissance, top gaz, perte de charge, débit, fioul.",
  "lang": "fr",
  "start_url": "./",
