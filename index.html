@@ -508,6 +508,10 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
 .ph-h{margin:0}
 /* V1.02 : interrupteurs espacés de leur texte, options du top gaz sur une colonne sur téléphone, boutons de mode de la perte de charge alignés, tuiles d'accueil compactes sur téléphone */
 label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
+.tkb{display:inline-flex;gap:1px;padding:2px;margin-left:auto;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tkb button{border:0;background:transparent;color:var(--muted);font:600 11.5px/1 var(--f-display);letter-spacing:.04em;padding:4px 8px;border-radius:999px;cursor:pointer}
+.tkb button[aria-pressed="true"]{background:var(--power);color:#fff}
+#g-tk-w .lab{flex-wrap:nowrap}
 .dp-mode{display:flex;width:100%}
 .dp-mode button{flex:1 1 0;white-space:normal;line-height:1.2;padding:8px 6px}
 .pts thead th .sw{margin-right:4px;vertical-align:-1px}
@@ -527,7 +531,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       <div class="tl">
         <div>
           <h1>HeatDrive</h1>
-          <p class="sub">Courbes de chauffe, puissance, top gaz, pertes de charge, débit et fioul</p>
+          <p class="sub">Courbes de chauffe, puissance, top gaz, pertes de charge et débit</p>
         </div>
       </div>
     </header>
@@ -742,7 +746,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
             </div>
             <div class="ef">
               <label for="g-eta"><span class="lab">Rendement théorique</span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-eta" autocomplete="off"><span class="u">%</span></span></label>
-              <label for="g-tk" id="g-tk-w"><span class="lab">Rendement ticket de combustion</span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-tk" autocomplete="off"><span class="u">%</span></span></label>
+              <label for="g-tk" id="g-tk-w"><span class="lab">Rendement ticket de combustion<span class="tkb" role="group" aria-label="Base du rendement du ticket"><button type="button" data-gtkb="pci" aria-pressed="true">PCI</button><button type="button" data-gtkb="pcs" aria-pressed="false">PCS</button></span></span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-tk" autocomplete="off"><span class="u">%</span></span></label>
             </div>
             <p class="hint" id="g-tk-h">Rendement sur PCI relevé à l'analyseur de combustion. Saisi, il remplace le rendement théorique pour la puissance utile et la charge, et les deux s'affichent pour comparer.</p>
             <div class="g-lm" id="g-lm">
@@ -1206,7 +1210,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   // au moins deux points saisis (non Auto) : les points extrêmes repassent en saisie si besoin
   function sKeep2(c) { for (const i of [0, c.t.length - 1]) if (c.a.filter(x => !x).length < 2) c.a[i] = false; }
   const PM_DEF = () => ({ mode: 'p', pu: 'kW', dep: 70, ret: 50, q: 1, p: NaN });
-  const GAS_DEF = () => ({ type: 'h', pcs: 11.6, pci: 10.4, dur: 36, vol: NaN, time: NaN, i0: NaN, i1: NaN, corr: true, pg: 300, tg: 12.5, pa: 1013, pn: NaN, eta: NaN, btype: 'cond', pnOn: true, tk: NaN, lm: 'eta', ls: 100 });
+  const GAS_DEF = () => ({ type: 'h', pcs: 11.6, pci: 10.4, dur: 36, vol: NaN, time: NaN, i0: NaN, i1: NaN, corr: true, pg: 300, tg: 12.5, pa: 1013, pn: NaN, eta: NaN, btype: 'cond', pnOn: true, tk: NaN, tkb: 'pci', lm: 'eta', ls: 100 });
   const DP_DEF = () => ({ mode: 'diag', u: 'mbar', qn: NaN, pn: NaN, qm: NaN, pm: NaN });
   const FOD_DEF = () => ({ cal: NaN, p: NaN, pref: 7, rho: 0.84, pci: 11.86, eta: 90, cmp: false, pt: 'u', pn: NaN, opt: false });
   const FL_DEF = () => ({ fm: 'idx', vu: 'm3', tu: 'h', dur: 36, i0: NaN, i1: NaN, vol: NaN, time: NaN });
@@ -3315,8 +3319,8 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
 
   /* =================== Accueil et modules =================== */
   /* ---------- Modules favoris de l'accueil ---------- */
-  const APP_VER = '1.02.0 (TEST)';
-  const OFF = []; // modules retirés pour l'instant (code conservé) : Puissance fioul revient en V1.00
+  const APP_VER = '0.75.0 (TEST)';
+  const OFF = ['fod']; // modules retirés pour l'instant (code conservé) : Puissance fioul revient en V1.00
   const MODS = ['simple', 'expert', 'power', 'gas', 'dp', 'flow', 'fod'];
   const HKEY = KEY + '-home';
   let HIDE = (() => { try { const a = JSON.parse(LS.getItem(HKEY) || '[]'); return Array.isArray(a) ? a.filter(m => MODS.includes(m)) : []; } catch (_) { return []; } })();
@@ -4099,15 +4103,17 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     const k = G.corr && fin(G.pa) && fin(G.pg) && fin(G.tg) ? ((G.pa + G.pg) / 1013.25) * (273.15 / (273.15 + G.tg)) : 1;
     const q = vol / 1000 * 3600 / time, qn = q * k;
     const ppcs = qn * G.pcs, ppci = qn * G.pci;
-    const eta = gasEta(G, ppci), tk = fin(G.tk) && G.tk > 0 ? G.tk : NaN, etaU = fin(tk) ? tk : eta;
+    // ticket de combustion saisi sur PCS (certains analyseurs) : ramené sur PCI = rendement PCS × PCS / PCI
+    const tkPcs = G.tkb === 'pcs', tkRaw = fin(G.tk) && G.tk > 0 ? G.tk : NaN, tk = fin(tkRaw) ? (tkPcs ? tkRaw * G.pcs / G.pci : tkRaw) : NaN, etaU = fin(tk) ? tk : NaN;
+    const eta = gasEta(G, ppci), etaU2 = fin(etaU) ? etaU : eta;
     const pnv0 = G.pnOn !== false && fin(G.pn) && G.pn > 0 ? G.pn : NaN, modeEta = G.lm === 'eta' && fin(pnv0) && fin(G.ls) && G.ls > 0;
     // mode « Calculer le rendement » : puissance utile = Pn × charge réglée (supposée), rendement calculé = puissance utile / puissance sur PCI
-    const pu = modeEta ? pnv0 * G.ls / 100 : fin(etaU) ? ppci * etaU / 100 : NaN; // puissance utile = puissance absorbée sur PCI × rendement (ticket de combustion s'il est saisi, sinon théorique)
+    const pu = modeEta ? pnv0 * G.ls / 100 : fin(etaU2) ? ppci * etaU2 / 100 : NaN; // puissance utile = puissance absorbée sur PCI × rendement (ticket de combustion s'il est saisi, sinon théorique)
     const pnv = G.pnOn !== false && fin(G.pn) && G.pn > 0 ? G.pn : NaN;
     // charge = puissance utile (rendement théorique) / Pn ; ou rendement réel = Pn × charge réglée / puissance sur PCI
     // mesure côté eau : chaleur donnée à l'eau = 1,163 × débit × ΔT ; rendement mesuré = celle-ci / puissance sur PCI
     const puw = false && fin(G.wq) && G.wq > 0 && fin(G.wd) && fin(G.wr) && G.wd > G.wr ? 1.163 * G.wq * (G.wd - G.wr) : NaN;
-    return { idx, vol, time, k, q, qn, ppcs, ppci, eta, tk, pu, pnv, load: fin(pnv) && !modeEta ? (fin(pu) ? pu : ppci) / pnv * 100 : NaN, puw, etam: fin(puw) ? puw / ppci * 100 : NaN, etac: modeEta ? pu / ppci * 100 : NaN, tkOff: false };
+    return { idx, vol, time, k, q, qn, ppcs, ppci, eta, tk, tkRaw, tkPcs, pu, pnv, load: fin(pnv) && !modeEta ? (fin(pu) ? pu : ppci) / pnv * 100 : NaN, puw, etam: fin(puw) ? puw / ppci * 100 : NaN, etac: modeEta ? pu / ppci * 100 : NaN, tkOff: false };
   }
   $('#g-type').addEventListener('change', e => {
     const k = e.target.value, g = GASES[k]; S.gas.type = k;
@@ -4133,6 +4139,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   numIn('g-ls', v => { S.gas.ls = fin(v) ? v : NaN; save(); renderGas(); });
   document.querySelectorAll('[data-glm]').forEach(b => b.addEventListener('click', () => { S.gas.lm = b.dataset.glm; save(); renderGas(); }));
   numIn('g-tk', v => { S.gas.tk = fin(v) && v > 0 ? v : NaN; save(); renderGas(); });
+  document.querySelectorAll('[data-gtkb]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); S.gas.tkb = b.dataset.gtkb; save(); renderGas(); }));
   $('#g-pnon').addEventListener('change', e => { S.gas.pnOn = e.target.checked; save(); renderGas(); if (S.gas.pnOn) $('#g-pn').focus(); });
   // rendement tapé : passe en « valeur libre » ; vidé en mode automatique : le calcul reste
   $('#g-eta').addEventListener('input', e => { const v = e.target.valueAsNumber; if (!(fin(v) && v > 0)) { if (S.gas.btype === 'free') { S.gas.eta = NaN; save(); renderGas(); } return; } S.gas.eta = v; S.gas.btype = 'free'; save(); renderGas(); });
@@ -4205,7 +4212,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   });
   $('#g-stop').addEventListener('click', () => { if (!gRun) return; gasStop(false); renderGas(); flash($('#g-msg'), T('Chrono arrêté : la durée mesurée est reprise dans le calcul.')); });
   $('#g-reset').addEventListener('click', () => { gasStop(true); S.gas.time = NaN; save(); renderGas(); });
-  const GHELP = {"qn": "<b>Débit de gaz.</b> Volume passé au compteur, ramené à l'heure et aux conditions normales (0 °C, 1013 mbar) : volume × 3 600 / durée × coefficient de correction.", "pcs": "<b>Puissance sur PCS.</b> Débit × PCS : toute l'énergie du gaz, chaleur de condensation des fumées comprise. C'est la base des factures.", "pci": "<b>Puissance sur PCI.</b> Débit × PCI : l'énergie du gaz sans la condensation. C'est la puissance consommée par le brûleur, celle des plaques signalétiques des brûleurs.", "pu": "<b>Puissance utile.</b> Puissance sur PCI × rendement théorique : la chaleur réellement transmise à l'eau, à comparer à la puissance nominale (utile) de la chaudière.", "load": "<b>Charge.</b> Puissance utile / puissance nominale de la chaudière : à quel pourcentage la chaudière tournait pendant le chrono.", "tk": "<b>Rendement ticket de combustion.</b> Rendement mesuré par l'analyseur à partir de la T° des fumées et du CO₂ ou de l'O₂, sur PCI. S'il est saisi : puissance utile = puissance sur PCI × rendement du ticket, et la charge en découle. Vérifiez que le ticket donne bien le rendement sur PCI et non sur PCS (environ 10 % plus bas).", "etac": "<b>Rendement calculé.</b> En mode « Calculer le rendement » : puissance utile = puissance nominale × charge réglée, et rendement calculé = puissance utile / puissance sur PCI. Il suppose la chaudière vraiment à la charge réglée pendant le chrono : au-dessus de 100 % (hors condensation), ce n'était pas le cas.", "eta": "<b>Rendement théorique.</b> Celui du type de chaudière choisi (minimum de la directive 92/42/CEE) ou celui de la notice en « Valeur libre ». Il n'est pas mesuré.", "pue": "<b>Puissance utile.</b> En mode « Calculer le rendement » : puissance nominale × charge réglée. C'est une hypothèse (chaudière vraiment à cette charge), pas un calcul à partir du gaz. Le rendement calculé en découle : puissance utile / puissance sur PCI.", "putk": "<b>Puissance utile selon ticket.</b> Puissance sur PCI × rendement du ticket de combustion : la chaleur fournie si le rendement mesuré à l'analyseur est juste.", "loadtk": "<b>Charge selon ticket.</b> Puissance utile selon ticket / puissance nominale : la charge réelle pendant le chrono d'après le ticket. Si elle est nettement sous la charge réglée, la chaudière ne tournait pas à cette charge, et le rendement calculé est faussé."};
+  const GHELP = {"qn": "<b>Débit de gaz.</b> Volume passé au compteur, ramené à l'heure et aux conditions normales (0 °C, 1013 mbar) : volume × 3 600 / durée × coefficient de correction.", "pcs": "<b>Puissance sur PCS.</b> Débit × PCS : toute l'énergie du gaz, chaleur de condensation des fumées comprise. C'est la base des factures.", "pci": "<b>Puissance sur PCI.</b> Débit × PCI : l'énergie du gaz sans la condensation. C'est la puissance consommée par le brûleur, celle des plaques signalétiques des brûleurs.", "pu": "<b>Puissance utile.</b> Puissance sur PCI × rendement théorique : la chaleur réellement transmise à l'eau, à comparer à la puissance nominale (utile) de la chaudière.", "load": "<b>Charge.</b> Puissance utile / puissance nominale de la chaudière : à quel pourcentage la chaudière tournait pendant le chrono.", "tk": "<b>Rendement ticket de combustion.</b> Rendement mesuré par l'analyseur à partir de la T° des fumées et du CO₂ ou de l'O₂, sur PCI. S'il est saisi : puissance utile = puissance sur PCI × rendement du ticket, et la charge en découle. Si le ticket donne le rendement sur PCS (environ 10 % plus bas), choisissez PCS à côté du champ : l'appli le ramène sur PCI.", "etac": "<b>Rendement calculé.</b> En mode « Calculer le rendement » : puissance utile = puissance nominale × charge réglée, et rendement calculé = puissance utile / puissance sur PCI. Il suppose la chaudière vraiment à la charge réglée pendant le chrono : au-dessus de 100 % (hors condensation), ce n'était pas le cas.", "eta": "<b>Rendement théorique.</b> Celui du type de chaudière choisi (minimum de la directive 92/42/CEE) ou celui de la notice en « Valeur libre ». Il n'est pas mesuré.", "pue": "<b>Puissance utile.</b> En mode « Calculer le rendement » : puissance nominale × charge réglée. C'est une hypothèse (chaudière vraiment à cette charge), pas un calcul à partir du gaz. Le rendement calculé en découle : puissance utile / puissance sur PCI.", "putk": "<b>Puissance utile selon ticket.</b> Puissance sur PCI × rendement du ticket de combustion : la chaleur fournie si le rendement mesuré à l'analyseur est juste.", "loadtk": "<b>Charge selon ticket.</b> Puissance utile selon ticket / puissance nominale : la charge réelle pendant le chrono d'après le ticket. Si elle est nettement sous la charge réglée, la chaudière ne tournait pas à cette charge, et le rendement calculé est faussé."};
   let gOpen = '', gLast = null;
   function renderGas() {
     const G = S.gas, R = gasCalc();
@@ -4218,6 +4225,8 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     setVal('g-pg', fin(G.pg) ? String(G.pg) : ''); setVal('g-tg', tin(G.tg)); setVal('g-pa', fin(G.pa) ? String(G.pa) : ''); setVal('g-pn', fin(G.pn) ? String(G.pn) : ''); { const R0 = gasCalc(), auto = G.btype !== 'free'; $('#g-btype').value = BTYPES.includes(G.btype) ? G.btype : 'cond'; $('#g-eta').classList.toggle('calc', auto); $('#g-eta').disabled = G.btype === 'none'; if (G.btype === 'none') $('#g-eta').value = ''; else { const e0 = fin(R0.eta) ? R0.eta : gasEta(G, NaN); setVal('g-eta', auto ? (fin(e0) ? String(e0) : '') : (fin(G.eta) ? String(G.eta) : '')); } }
     { const on = G.pnOn !== false; $('#g-pnon').checked = on; $('#g-pn-w').hidden = !on; }
     setVal('g-tk', fin(G.tk) ? String(G.tk) : '');
+    document.querySelectorAll('[data-gtkb]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.gtkb === (G.tkb === 'pcs' ? 'pcs' : 'pci'))));
+    $('#g-tk-h').textContent = G.tkb === 'pcs' ? T('Rendement sur PCS relevé à l\'analyseur : l\'appli le ramène sur PCI (× PCS / PCI = {0}){1}. Il remplace alors le rendement théorique pour la puissance utile et la charge.', [NF({ minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(G.pcs / G.pci), fin(G.tk) && G.tk > 0 && fin(G.pcs / G.pci) ? T(', soit {0} % sur PCI', [nf1.format(G.tk * G.pcs / G.pci)]) : '']) : T('Rendement sur PCI relevé à l\'analyseur de combustion. Saisi, il remplace le rendement théorique pour la puissance utile et la charge, et les deux s\'affichent pour comparer. Si l\'analyseur donne le rendement sur PCS, choisissez PCS.');
     { const on = G.pnOn !== false, me = G.lm === 'eta'; $('#g-lm').hidden = !on;
       document.querySelectorAll('[data-glm]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.glm === (me ? 'eta' : 'load'))));
       $('#g-ls-w').hidden = !me; setVal('g-ls', fin(G.ls) ? String(G.ls) : '');
@@ -4231,7 +4240,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       h = bigR(T('Puissance sur PCI'), f1(R.ppci), 'kW', 'power', 'pci') + bigR(T('Puissance sur PCS'), f1(R.ppcs), 'kW', '', 'pcs') + bigR(T('Débit de gaz'), nfn.format(R.qn), 'm³/h', '', 'qn');
       if (fin(R.pu)) h += bigR(fin(R.etac) ? T('Puissance utile supposée') : T('Puissance utile'), f1(R.pu), 'kW', '', fin(R.etac) ? 'pue' : 'pu');
       if (fin(R.etac)) h += bigR(T('Rendement calculé'), nf1.format(R.etac), '%', 'power', 'etac') + (fin(R.eta) ? bigR(T('Rendement théorique'), nfn.format(R.eta), '%', '', 'eta') : '');
-      if (fin(R.tk) && !R.tkOff) { h += bigR(T('Rendement ticket de combustion'), nfn.format(R.tk), '%', 'power', 'tk') + (fin(R.eta) && !fin(R.etac) ? bigR(T('Rendement théorique'), nfn.format(R.eta), '%', '', 'eta') : ''); }
+      if (fin(R.tk) && !R.tkOff) { h += bigR(R.tkPcs ? T('Rendement ticket ramené sur PCI') : T('Rendement ticket de combustion'), R.tkPcs ? nf1.format(R.tk) : nfn.format(R.tk), '%', 'power', 'tk') + (R.tkPcs ? bigR(T('Ticket sur PCS (saisi)'), nfn.format(R.tkRaw), '%') : '') + (fin(R.eta) && !fin(R.etac) ? bigR(T('Rendement théorique'), nfn.format(R.eta), '%', '', 'eta') : ''); }
       if (fin(R.load)) h += bigR(T('Charge'), nf0.format(R.load), '%', '', 'load');
       if (fin(R.etam)) h += bigR(T('Puissance côté eau'), f1(R.puw), 'kW') + bigR(T('Rendement mesuré'), nf1.format(R.etam), '%', 'power') + (fin(R.eta) ? bigR(T('Rendement théorique'), nfn.format(R.eta), '%', '', 'eta') : '');
       if (gOpen && GHELP[gOpen] && h.includes(`data-gh="${gOpen}"`)) h += `<div class="opt-help g-ih">${T(GHELP[gOpen])}</div>`;
@@ -4540,7 +4549,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       const res = [[T('Débit de gaz'), `${nfn.format(R.qn)} m³/h`], [T('Puissance sur PCS'), `${f1(R.ppcs)} kW`], [T('Puissance sur PCI'), `${f1(R.ppci)} kW`, 'power']];
       if (fin(R.eta)) res.push([T('Type de chaudière'), BNAME(G.btype || 'cond')], [T('Rendement théorique'), `${nfn.format(R.eta)} %`]);
       if (fin(R.etac)) res.push([T('Puissance nominale (utile)'), `${f1(R.pnv)} kW`], [T('Charge réglée'), `${nf0.format(G.ls)} %`], [T('Rendement calculé'), `${nf1.format(R.etac)} %`, 'power']);
-      if (fin(R.tk) && !R.tkOff) res.push([T('Rendement ticket de combustion'), `${nfn.format(R.tk)} %`, 'power']);
+      if (fin(R.tk) && !R.tkOff) { if (R.tkPcs) res.push([T('Rendement ticket de combustion (sur PCS)'), `${nfn.format(R.tkRaw)} %`]); res.push([R.tkPcs ? T('Rendement ticket ramené sur PCI') : T('Rendement ticket de combustion'), `${R.tkPcs ? nf1.format(R.tk) : nfn.format(R.tk)} %`, 'power']); }
       if (fin(R.pu)) res.push([T('Puissance utile'), `${f1(R.pu)} kW`, 'power']);
       if (fin(R.load)) res.push([fin(R.pu) ? T('Puissance nominale (utile)') : T('Puissance nominale (sur PCI)'), `${f1(G.pn)} kW`], [T('Charge'), `${nf0.format(R.load)} %`, 'power']);
       if (fin(R.etam)) res.push([T('Débit d\'eau'), `${nfn.format(G.wq)} m³/h`], [T('Départ'), `${tf1(G.wd)} ${UT()}`, 'supply'], [T('Retour'), `${tf1(G.wr)} ${UT()}`, 'return'], [T('Puissance côté eau'), `${f1(R.puw)} kW`], [T('Rendement mesuré'), `${nf1.format(R.etam)} %`, 'power']);
@@ -4651,7 +4660,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
         const pu = kv(T('Puissance utile'), F(`${pn}*${ls}/100`, R.pu, 11), 'kW');
         kv(T('Rendement calculé'), F(`${pu}/${ppci}*100`, R.etac), '%');
       } else {
-      const eta = fin(R.tk) ? kv(T('Rendement ticket de combustion'), I(R.tk), '%') : eta0;
+      const eta = fin(R.tk) ? (R.tkPcs ? kv(T('Rendement ticket ramené sur PCI'), F(`${kv(T('Rendement ticket de combustion (sur PCS)'), I(R.tkRaw), '%')}*${pcs}/${pci}`, R.tk), '%') : kv(T('Rendement ticket de combustion'), I(R.tk), '%')) : eta0;
       const puf = `IF(N(${eta})>0,${ppci}*${eta}/100,"")`;
       kv(T('Puissance utile'), fin(R.pu) ? F(puf, R.pu, 11) : { f: puf, v: '', s: 11, str: true }, 'kW');
       const pn = kv(fin(R.pu) ? T('Puissance nominale (utile)') : T('Puissance nominale (sur PCI)'), I(R.pnv, 11), 'kW');
