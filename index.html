@@ -506,6 +506,14 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
 .ph-add input{position:absolute;width:1px;height:1px;opacity:0}
 .ph-add[aria-disabled="true"]{opacity:.5;pointer-events:none}
 .ph-h{margin:0}
+/* V1.02 : interrupteurs espacés de leur texte, options du top gaz sur une colonne sur téléphone, boutons de mode de la perte de charge alignés, tuiles d'accueil compactes sur téléphone */
+label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
+.dp-mode{display:flex;width:100%}
+.dp-mode button{flex:1 1 0;white-space:normal;line-height:1.2;padding:8px 6px}
+.pts thead th .sw{margin-right:4px;vertical-align:-1px}
+.dp-verdict-in{flex-basis:100%;margin:2px 0 4px}
+@media (max-width:440px){#g-opt .ef{grid-template-columns:minmax(0,1fr)}#g-opt .ef > *{order:0!important}}
+@media (max-width:600px){.tiles-h{gap:10px}.tile-h{display:grid;grid-template-columns:30px minmax(0,1fr);column-gap:12px;row-gap:2px;align-items:start;min-height:0;padding:12px 14px}.tile-h svg{width:30px;height:30px;grid-row:span 2}.th-t{font-size:18px}.th-d{font-size:13px;line-height:1.35}}
 /* iPhone et iPad : pas de zoom automatique en touchant un champ (Safari zoome sous 16 px) */
 @supports (-webkit-touch-callout:none){input[type=text],input[type=number],input[type=email],input[type=tel],select,textarea{font-size:16px!important}}
 @media (max-width:440px){.panel{padding:12px}.pts input{min-width:50px;padding:7px 6px}}
@@ -519,14 +527,14 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       <div class="tl">
         <div>
           <h1>HeatDrive</h1>
-          <p class="sub">Courbes de chauffe, puissance, top gaz et pertes de charge</p>
+          <p class="sub">Courbes de chauffe, puissance, top gaz, pertes de charge et débit</p>
         </div>
       </div>
     </header>
     <div class="home-set"><button type="button" class="btn set-btn" data-go="set"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Paramètres</span></button><span class="set-who" id="set-who"></span></div>
     <nav class="tiles-h" aria-label="Modules">
       <button type="button" class="tile-h" data-go="simple"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 8 L14 8 L30 26 L33 26" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16 L14 16 L30 29 L33 29" fill="none" stroke="var(--c2)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="th-t">Courbe de chauffe simplifiée</span><span class="th-d">Départ selon la T° extérieure, de 2 à 6 points. Deux courbes superposées pour comparer le primaire et le secondaire.</span></button>
-      <button type="button" class="tile-h" data-go="expert"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 7 L12 7 L22 18 L32 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16 L12 16 L22 22 L32 26" fill="none" stroke="var(--return)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="2.6" fill="currentColor"/><circle cx="22" cy="18" r="2.6" fill="currentColor"/></svg><span class="th-t">Courbe de chauffe expert</span><span class="th-d">Émetteurs, 2 ou 4 points, départ et retour, puissance, options et points de fonctionnement.</span></button>
+      <button type="button" class="tile-h" data-go="expert"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 7 L12 7 L22 18 L32 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16 L12 16 L22 22 L32 26" fill="none" stroke="var(--return)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="2.6" fill="currentColor"/><circle cx="22" cy="18" r="2.6" fill="currentColor"/></svg><span class="th-t">Courbe de chauffe expert</span><span class="th-d">Émetteurs, de 2 à 6 points, départ et retour, puissance, options et points de fonctionnement.</span></button>
       <button type="button" class="tile-h" data-go="power"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M20 3 L9 20 L17 20 L15 33 L27 15 L19 15 Z" fill="none" stroke="var(--power)" stroke-width="2.4" stroke-linejoin="round"/></svg><span class="th-t">Calcul de puissance</span><span class="th-d">Puissance ou débit d'un circuit d'eau à partir du départ et du retour : P = 1,163 × débit × ΔT.</span></button>
       <button type="button" class="tile-h" data-go="gas"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M18 20 L18 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M14 4 L22 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="th-t">Top gaz</span><span class="th-d">Puissance d'une chaudière mesurée au compteur gaz, avec un chrono de 36 ou 72 secondes, PCS et PCI.</span></button>
       <button type="button" class="tile-h" data-go="dp"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 32 Q20 30 32 5" fill="none" stroke="var(--return)" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="12" r="3" fill="var(--supply)"/></svg><span class="th-t">Perte de charge</span><span class="th-d">Perte de charge attendue selon le débit, pour savoir si un échangeur ou un filtre est encrassé.</span></button>
@@ -606,7 +614,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
           <div class="legend" id="leg-s"></div>
           <div class="plot" id="plot-s"><svg id="svg-s" role="img" aria-label="Courbes de départ selon la température extérieure"></svg><div class="xh" hidden></div><div class="tip" hidden></div></div>
           <div class="s-reads" id="s-reads" aria-live="polite"></div>
-          <div class="q-actions"><button type="button" class="btn" id="s-add-read">+ 1 lecture</button></div>
+          <div class="q-actions"><button type="button" class="btn" id="s-add-read">+ 1 repère de lecture</button></div>
         </section>
       </div>
     </div>
@@ -672,27 +680,26 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
         <section class="panel">
           <div class="ph"><h2>Gaz</h2><button type="button" class="ib-s" data-mhelp="gas" aria-expanded="false" aria-controls="mh-gas" title="Méthode de calcul, PCS et PCI">i</button></div>
           <div class="opt-help mhelp" id="mh-gas" hidden>
-            <p data-t><b>Méthode.</b> Chaudière en pleine puissance et autres appareils à gaz arrêtés, on relève le volume de gaz passé au compteur pendant une durée précise. Débit (m³/h) = volume (m³) × 3 600 / durée (s). Puissance (kW) = débit × pouvoir calorifique (kWh/m³).</p>
-            <p data-t><b>Pourquoi 36 ou 72 secondes.</b> 36 s, c'est un centième d'heure : le débit en m³/h vaut le volume compté en litres × 0,1. En gaz naturel, les litres comptés en 36 s donnent donc à peu près la puissance en kW. 72 s double le volume compté et divise par deux l'erreur de lecture : préférez-le pour les petites puissances.</p>
-            <p data-t><b>PCS (pouvoir calorifique supérieur).</b> Énergie libérée par la combustion complète d'1 m³ de gaz, en récupérant la chaleur de condensation de la vapeur d'eau des fumées. C'est la valeur des factures de gaz.</p>
-            <p data-t><b>PCI (pouvoir calorifique inférieur).</b> La même énergie sans la chaleur de condensation : environ 90 % du PCS en gaz naturel, 92 % en propane et butane. Les puissances des chaudières sont données sur PCI ; une chaudière à condensation peut donc dépasser 100 % de rendement sur PCI.</p>
-            <p data-t><b>Gaz naturel H ou B.</b> H (haut pouvoir calorifique, PCS ≈ 11,6 kWh/m³, 20 mbar) : le gaz de presque toute la France. B ou L (bas pouvoir calorifique, PCS ≈ 9,8 kWh/m³, 25 mbar) : gaz des Pays-Bas, distribué seulement dans le Nord, qui passe en gaz H d'ici 2029. Dans le doute, la facture l'indique ; une erreur fausse la puissance d'environ 18 %.</p>
-            <p data-t><b>Correction.</b> Le PCS et le PCI sont donnés pour 1 m³ dans les conditions normales (0 °C, 1 013 mbar). Le volume lu au compteur est ramené à ces conditions : × (pression atmosphérique + pression du gaz) / 1 013,25 × 273,15 / (273,15 + T° du gaz).</p>
+            <p data-t><b>Méthode.</b> Chaudière en pleine puissance, autres appareils à gaz arrêtés : on relève le volume passé au compteur pendant le chrono. Débit (m³/h) = volume × 3 600 / durée ; puissance = débit × pouvoir calorifique.</p>
+            <p data-t><b>36 ou 72 s.</b> 36 s = un centième d'heure : en gaz naturel, les litres comptés donnent à peu près la puissance en kW. 72 s divise par deux l'erreur de lecture (petites puissances).</p>
           </div>
           <div class="ef ef1">
-            <label for="g-type"><span class="lab">Type de gaz</span><select id="g-type" class="btn wsel"><option value="h">Gaz naturel H</option><option value="b">Gaz naturel B (L)</option><option value="p">Propane</option><option value="u">Butane</option><option value="x">Autre (valeurs libres)</option></select></label>
+            <label for="g-type"><span class="lab">Type de gaz<button type="button" class="ib-s" data-mhelp="gastype" aria-expanded="false" aria-controls="mh-gastype" title="Informations">i</button></span><select id="g-type" class="btn wsel"><option value="h">Gaz naturel H</option><option value="b">Gaz naturel B (L)</option><option value="p">Propane</option><option value="u">Butane</option><option value="x">Autre (valeurs libres)</option></select></label>
           </div>
           <div class="ef">
-            <label for="g-pcs"><span class="lab">PCS</span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-pcs" autocomplete="off"><span class="u">kWh/m³</span></span></label>
-            <label for="g-pci"><span class="lab">PCI</span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-pci" autocomplete="off"><span class="u">kWh/m³</span></span></label>
+            <label for="g-pcs"><span class="lab">PCS<button type="button" class="ib-s" data-mhelp="gaspcs" aria-expanded="false" aria-controls="mh-gaspcs" title="Informations">i</button></span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-pcs" autocomplete="off"><span class="u">kWh/m³</span></span></label>
+            <label for="g-pci"><span class="lab">PCI<button type="button" class="ib-s" data-mhelp="gaspci" aria-expanded="false" aria-controls="mh-gaspci" title="Informations">i</button></span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-pci" autocomplete="off"><span class="u">kWh/m³</span></span></label>
           </div>
+          <div class="opt-help mhelp" id="mh-gastype" hidden><p data-t><b>Gaz H ou B.</b> H : presque toute la France (PCS ≈ 11,6 kWh/m³). B : seulement dans le Nord (PCS ≈ 9,8), passe en H d'ici 2029. Une erreur fausse la puissance d'environ 18 % : dans le doute, voir la facture.</p></div>
+          <div class="opt-help mhelp" id="mh-gaspcs" hidden><p data-t><b>PCS.</b> Énergie d'1 m³ de gaz en récupérant la condensation des fumées. C'est la valeur des factures.</p></div>
+          <div class="opt-help mhelp" id="mh-gaspci" hidden><p data-t><b>PCI.</b> La même énergie sans la condensation : environ 90 % du PCS (92 % en propane et butane). Les puissances des chaudières sont données sur PCI.</p></div>
           <p class="hint">Valeurs indicatives pour 1 m³ dans les conditions normales (0 °C, 1 013 mbar). Le PCS exact figure sur la facture de gaz.</p>
         </section>
         <section class="panel">
           <div class="ph"><h2>Mesure</h2><button type="button" class="ib-s" data-mhelp="gasm" aria-expanded="false" aria-controls="mh-gasm" title="Informations">i</button></div>
           <div class="opt-help mhelp" id="mh-gasm" hidden>
             <p data-t><b>Index au départ et à la fin.</b> Relevés du compteur gaz au début et à la fin du chrono ; la différence donne le volume de gaz passé.</p>
-            <p data-t><b>Conditions normales.</b> Le compteur mesure le gaz à sa pression et à sa température réelles, alors que le PCS et le PCI sont donnés pour 1 m³ à 0 °C et 1013 mbar. La correction utilise la pression du gaz au compteur (environ 20 mbar en gaz naturel), sa température et la pression atmosphérique. Sans elle, la puissance est surestimée d'environ 3 à 4 %.</p>
+            <p data-t><b>Conditions normales.</b> Le PCS et le PCI sont donnés pour 1 m³ à 0 °C et 1 013 mbar. La correction (dans « + d'options », active par défaut) ramène le volume lu au compteur à ces conditions avec la pression du gaz au compteur (300 mbar sur un poste 300 mbar, 20 mbar en gaz naturel détendu), sa température et la pression atmosphérique. À 300 mbar, sans correction, la puissance serait sous-estimée d'environ 20 %.</p>
           </div>
           <div class="ef ef1">
             <label for="g-i0"><span class="lab">Index au départ</span><span class="f"><input type="text" inputmode="decimal" id="g-i0" autocomplete="off" spellcheck="false"><span class="u">m³</span></span></label>
@@ -701,7 +708,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
           <div class="ph"><h3>Chrono</h3><div class="seg sm" role="group" aria-label="Durée du chrono"><button type="button" data-gdur="36" aria-pressed="true">36 s</button><button type="button" data-gdur="72" aria-pressed="false">72 s</button></div></div>
           <div class="chrono" id="g-clock" role="timer">36,0</div>
           <div class="crow"><button type="button" class="btn primary" id="g-start">Démarrer</button><button type="button" class="btn" id="g-stop">Arrêter</button><button type="button" class="btn" id="g-reset">Remettre à zéro</button></div>
-          <p class="hint">Démarrez quand un chiffre du compteur passe ; au bip, relevez le volume écoulé.</p>
+          <p class="hint">Démarrez quand un chiffre du compteur passe ; au bip, relevez l'index de fin.</p>
         </div>
           <div class="ef ef1">
             <label for="g-i1"><span class="lab">Index à la fin</span><span class="f"><input type="text" inputmode="decimal" id="g-i1" autocomplete="off" spellcheck="false" data-caret-end><span class="u">m³</span></span></label>
@@ -719,11 +726,9 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
               <label for="g-pa"><span class="lab">Pression atmosphérique</span><span class="f"><input type="number" step="any" inputmode="decimal" id="g-pa" autocomplete="off"><span class="u">mbar</span></span></label>
             </div>
             <div class="opt-help mhelp" id="mh-gastg" hidden>
-              <p data-t><b>Où prendre la température du gaz.</b> Au compteur, là où le volume est mesuré : la température de l'air autour du compteur, ou mieux celle de son tube d'arrivée. Pas celle de la chaufferie ni du brûleur : le gaz s'y réchauffe après être passé au compteur.</p>
-              <p data-t><b>Canalisation enterrée.</b> Le gaz arrive à peu près à la température du sol, environ 10 à 15 °C toute l'année. Dans un coffret extérieur, il se rapproche ensuite de la température de l'air : par grand froid ou forte chaleur, prenez une valeur entre les deux. À défaut de mesure, 15 °C convient.</p>
-              <p data-t><b>Impact.</b> 3 °C d'écart changent la puissance d'environ 1 % (10 °C : environ 3,5 %). Plus le gaz est froid, plus il est dense : à volume égal, la puissance est plus forte.</p>
+              <p data-t><b>T° du gaz.</b> À prendre au compteur (air autour ou tube d'arrivée), pas en chaufferie. Canalisation enterrée : 10 à 15 °C toute l'année. À défaut de mesure, 15 °C convient. 3 °C d'écart changent la puissance d'environ 1 %.</p>
             </div>
-            <label class="sw-row" for="g-pnon"><input type="checkbox" role="switch" id="g-pnon"><span>Puissance nominale chaudière</span></label>
+            <label class="sw-row" for="g-pnon"><input type="checkbox" role="switch" id="g-pnon"><span>Comparer à la puissance nominale</span></label>
             <div class="ef">
               <label for="g-pn" id="g-pn-w"><span class="lab">Puissance nominale chaudière<button type="button" class="ib-s" data-mhelp="gaspn" aria-expanded="false" aria-controls="mh-gaspn" title="Informations">i</button></span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-pn" autocomplete="off"><span class="u">kW</span></span></label>
               <label for="g-btype"><span class="lab">Type de chaudière<button type="button" class="ib-s" data-mhelp="gaseta" aria-expanded="false" aria-controls="mh-gaseta" title="Informations">i</button></span><select id="g-btype" class="btn wsel"><option value="cond">Condensation</option><option value="condf">Condensation, retour froid</option><option value="bt">Basse température</option><option value="std">Standard (ancienne)</option><option value="free">Valeur libre (notice)</option><option value="none">Sans rendement (comparer à Qn)</option></select></label>
@@ -732,8 +737,8 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
               <p data-t><b>Puissance nominale.</b> Lue sur la plaque signalétique ou dans la notice de la chaudière. Facultative : saisie, elle donne la « Charge », pour vérifier que la chaudière tourne bien à pleine puissance pendant le test, ou voir à quel pourcentage elle est réglée. Avec un rendement, la charge compare la puissance utile à la puissance utile nominale Pn ; sans rendement, elle compare la puissance absorbée au débit calorifique nominal Qn.</p>
             </div>
             <div class="opt-help mhelp" id="mh-gaseta" hidden>
-              <p data-t><b>Rendement par défaut.</b> Valeurs minimales à pleine puissance fixées par la directive européenne 92/42/CEE sur le rendement des chaudières à eau chaude (4 à 400 kW, sur PCI, eau à 70 °C de moyenne) : condensation 91 + log Pn ; basse température 87,5 + 1,5 log Pn ; standard 84 + 2 log Pn. « Condensation, retour froid » reprend l'exigence de la même directive avec un retour à 30 °C : 97 + log Pn. Pn en kW : la puissance nominale saisie, sinon la puissance mesurée. Exemple à 24 kW : 92,4 %, 98,4 %, 89,6 % et 86,8 %.</p>
-              <p data-t><b>Puissance utile.</b> Puissance utile = puissance sur PCI × rendement, c'est la chaleur transmise à l'eau. Les valeurs ci-dessus sont des minimums réglementaires : une chaudière récente fait souvent un peu mieux. Pour une valeur exacte, choisissez « Valeur libre » et reprenez le rendement de la notice. « Sans rendement » : pas de puissance utile, la charge est calculée sur la puissance absorbée.</p>
+              <p data-t><b>Rendement par défaut.</b> Minimums de la directive 92/42/CEE à pleine puissance, sur PCI : condensation 91 + log Pn, retour froid 97 + log Pn, basse température 87,5 + 1,5 log Pn, standard 84 + 2 log Pn (à 24 kW : 92,4, 98,4, 89,6 et 86,8 %).</p>
+              <p data-t>Pour la valeur exacte, choisissez « Valeur libre » et reprenez la notice. « Sans rendement » : la charge se calcule sur la puissance absorbée.</p>
             </div>
             <div class="ef">
               <label for="g-eta"><span class="lab">Rendement théorique</span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="g-eta" autocomplete="off"><span class="u">%</span></span></label>
@@ -776,10 +781,9 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
         <section class="panel">
           <div class="ph"><h2>Valeurs</h2><button type="button" class="ib-s" data-mhelp="dp" aria-expanded="false" aria-controls="mh-dp" title="Méthode de calcul">i</button></div>
           <div class="opt-help mhelp" id="mh-dp" hidden>
-            <p>Dans un échangeur, un filtre ou une vanne, l'écoulement est turbulent : la perte de charge varie comme le carré du débit. Perte de charge attendue = perte de charge du fabricant × (débit mesuré / débit du fabricant)².</p>
-            <p>Si la perte de charge mesurée dépasse nettement la valeur attendue au même débit, l'appareil est encrassé. Repères indicatifs : jusqu'à 1,2 fois la valeur attendue, normal ; de 1,2 à 1,5, à surveiller ; de 1,5 à 2,5, encrassé ; au-delà, très encrassé ou bouché.</p>
-            <p>Le Kv est le débit (m³/h) qui donne 1 bar de perte de charge : Kv = débit / √(perte de charge en bar). Un Kv mesuré plus petit que le Kv du fabricant indique un passage réduit.</p>
-            <p>Mesurez la perte de charge entre l'entrée et la sortie de l'appareil, sur des prises de pression proches, et le débit au même moment (compteur, débitmètre ou calcul à partir de la puissance).</p>
+            <p>Perte de charge attendue = perte de charge du fabricant × (débit mesuré / débit du fabricant)².</p>
+            <p>Écart mesuré / attendu : jusqu'à 1,2 normal ; 1,2 à 1,5 à surveiller ; 1,5 à 2,5 encrassé ; au-delà, très encrassé ou bouché.</p>
+            <p>Kv = débit (m³/h) qui donne 1 bar de perte de charge. Un Kv mesuré plus petit que celui du fabricant indique un passage réduit.</p>
           </div>
           <div class="unit-row"><span class="lab" id="dpu-lab">Unité de pression</span><div class="seg sm" role="group" aria-labelledby="dpu-lab"><button type="button" data-dpu="kPa" aria-pressed="false">kPa</button><button type="button" data-dpu="mbar" aria-pressed="true">mbar</button><button type="button" data-dpu="mCE" aria-pressed="false">mCE</button><button type="button" data-dpu="bar" aria-pressed="false">bar</button></div></div>
           <div class="seg sm dp-mode" role="group" aria-label="Calcul"><button type="button" data-dpm="diag" aria-pressed="true">Diagnostic</button><button type="button" data-dpm="q" aria-pressed="false">Calculer le débit</button><button type="button" data-dpm="p" aria-pressed="false">Calculer la perte de charge</button></div>
@@ -890,10 +894,8 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
         <section class="panel">
           <div class="ph"><h2>Gicleur et pompe</h2><button type="button" class="ib-s" data-mhelp="fod" aria-expanded="false" aria-controls="mh-fod" title="Méthode de calcul">i</button></div>
           <div class="opt-help mhelp" id="mh-fod" hidden>
-            <p data-t><b>Méthode.</b> Le calibre gravé sur le gicleur est son débit en gallons US par heure (USgal/h) à 7 bar. Le débit varie comme la racine carrée de la pression : débit réel = calibre × √(pression de pompe / 7). Puissance du brûleur (kW, sur PCI) = débit (L/h) × densité (kg/L) × PCI (kWh/kg).</p>
-            <p data-t><b>Ordre de grandeur.</b> 1 USgal = 3,785 L. À 7 bar, un gicleur de 1,00 USgal/h débite environ 3,18 kg/h de fioul domestique, soit environ 37,7 kW sur PCI. À 12 bar, le même gicleur débite environ 4,16 kg/h, soit environ 49 kW.</p>
-            <p data-t><b>Pression de pompe.</b> Lisez-la sur un manomètre branché à la prise de pression de la pompe, brûleur en marche. Elle est souvent réglée entre 10 et 14 bar.</p>
-            <p data-t><b>Précision.</b> C'est une estimation : le débit réel peut s'écarter de 5 à 10 % (tolérance et usure du gicleur, viscosité et réchauffage du fioul). Pour une mesure exacte, relevez la consommation au compteur fioul ou par pesée.</p>
+            <p data-t><b>Méthode.</b> Le calibre gravé est le débit en USgal/h à 7 bar ; il varie comme la racine carrée de la pression. Puissance (kW, sur PCI) = débit (L/h) × densité × PCI. Exemple : gicleur 1,00 à 12 bar ≈ 49 kW.</p>
+            <p data-t><b>Précision.</b> Estimation à 5 à 10 % près (usure du gicleur, viscosité). Pression de pompe : manomètre sur la prise de la pompe, brûleur en marche.</p>
           </div>
           <div class="ef">
             <label for="o-cal"><span class="lab">Calibre du gicleur</span><span class="f"><input type="number" step="any" min="0" inputmode="decimal" id="o-cal" list="o-cals" autocomplete="off"><span class="u">USgal/h</span></span></label>
@@ -950,7 +952,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     <button type="button" class="back" data-go="home">← Accueil</button>
     <div class="tl">
       <div>
-        <h1>Courbe de chauffe</h1>
+        <h1>Courbe de chauffe expert</h1>
         <p class="sub">Loi d'eau départ / retour, débit et puissance selon la température extérieure</p>
       </div>
     </div>
@@ -1204,7 +1206,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
   // au moins deux points saisis (non Auto) : les points extrêmes repassent en saisie si besoin
   function sKeep2(c) { for (const i of [0, c.t.length - 1]) if (c.a.filter(x => !x).length < 2) c.a[i] = false; }
   const PM_DEF = () => ({ mode: 'p', pu: 'kW', dep: 70, ret: 50, q: 1, p: NaN });
-  const GAS_DEF = () => ({ type: 'h', pcs: 11.6, pci: 10.4, dur: 36, vol: NaN, time: NaN, i0: NaN, i1: NaN, corr: true, pg: 300, tg: 12.5, pa: 1013, pn: NaN, eta: NaN, btype: 'std', pnOn: true, tk: NaN, lm: 'eta', ls: 100 });
+  const GAS_DEF = () => ({ type: 'h', pcs: 11.6, pci: 10.4, dur: 36, vol: NaN, time: NaN, i0: NaN, i1: NaN, corr: true, pg: 300, tg: 12.5, pa: 1013, pn: NaN, eta: NaN, btype: 'cond', pnOn: true, tk: NaN, lm: 'eta', ls: 100 });
   const DP_DEF = () => ({ mode: 'diag', u: 'mbar', qn: NaN, pn: NaN, qm: NaN, pm: NaN });
   const FOD_DEF = () => ({ cal: NaN, p: NaN, pref: 7, rho: 0.84, pci: 11.86, eta: 90, cmp: false, pt: 'u', pn: NaN, opt: false });
   const FL_DEF = () => ({ fm: 'idx', vu: 'm3', tu: 'h', dur: 36, i0: NaN, i1: NaN, vol: NaN, time: NaN });
@@ -2108,7 +2110,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     const xStep = pw < 360 && (o.xd.max - o.xd.min) / o.xd.step > 6 ? o.xd.step * 2 : o.xd.step;
     const xm = o.xMark != null && o.xMark >= o.xd.min && o.xMark <= o.xd.max ? X(o.xMark) : null;
     for (let v = Math.ceil(o.xd.min / xStep - 1e-9) * xStep; v <= o.xd.max + 1e-9; v += xStep) {
-      const x = P1(X(v)), near = xm !== null && Math.abs(X(v) - xm) < 18;
+      const x = P1(X(v)), near = xm !== null && Math.abs(X(v) - xm) < 26;
       s += `<line x1="${x}" x2="${x}" y1="${mt}" y2="${H - mb}" class="g${Math.abs(v) < 1e-9 ? ' z' : ''}"/>` + (near ? '' : `<text x="${x}" y="${H - mb + 17}" text-anchor="middle" class="tk">${(o.xfmt || fx)(v)}</text>`);
     }
     if (xm !== null) s += `<line x1="${P1(xm)}" x2="${P1(xm)}" y1="${mt}" y2="${H - mb}" class="mark7"/><text x="${P1(xm)}" y="${H - mb + 17}" text-anchor="middle" class="tk mk7">${fx(o.xMark)}</text>`;
@@ -3313,7 +3315,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
 
   /* =================== Accueil et modules =================== */
   /* ---------- Modules favoris de l'accueil ---------- */
-  const APP_VER = '0.73.1';
+  const APP_VER = '1.02.1';
   const OFF = ['fod']; // modules retirés pour l'instant (code conservé) : Puissance fioul revient en V1.00
   const MODS = ['simple', 'expert', 'power', 'gas', 'dp', 'flow', 'fod'];
   const HKEY = KEY + '-home';
@@ -3621,8 +3623,11 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
   // ouvre un lien d'e-mail ; si l'affichage bloque l'ouverture, le dit
   function openLink(url, fm) {
     if (/^mailto:/i.test(url)) {
-      try { location.href = url; } catch (_) {}
-      if (fm) fm.textContent = T('Si rien ne s\'ouvre, aucune messagerie n\'est réglée sur cet appareil : utilisez « Ouvrir Gmail ».');
+      // vrai lien (et pas location.href) : le téléphone le passe à l'appli de messagerie par défaut
+      try { const a = document.createElement('a'); a.href = url; a.target = '_top'; a.rel = 'noopener'; a.style.display = 'none'; document.body.appendChild(a); a.click(); a.remove(); } catch (_) { try { location.href = url; } catch (__) {} }
+      // message seulement si rien ne s'est ouvert (la page garde la main)
+      let left = false; const away = () => { left = true; }; window.addEventListener('blur', away, { once: true }); document.addEventListener('visibilitychange', away, { once: true });
+      if (fm) setTimeout(() => { window.removeEventListener('blur', away); document.removeEventListener('visibilitychange', away); if (!left && document.visibilityState === 'visible') fm.textContent = T('Aucune messagerie ne s\'est ouverte : joignez le fichier enregistré à un e-mail depuis votre messagerie.'); }, 2000);
       return;
     }
     let w = null;
@@ -3672,7 +3677,9 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       const gm = `https://mail.google.com/mail/?view=cm&fs=1${to ? `&to=${e(to)}` : ''}&su=${e(subject)}&body=${e(text)}`;
       const mt = `mailto:${e(to).replace(/%40/g, '@').replace(/%2C/g, ',')}?subject=${e(subject)}&body=${e(text)}`;
       const lead = window.claude && !mcp ? T('L\'envoi direct par Gmail n\'est pas disponible dans cet affichage. Fichier enregistré : joignez-le à un e-mail.') : T('Fichier enregistré : joignez-le au message.');
-      box.innerHTML = `<div class="dl-pick"><span class="dl-name">${xesc(lead)}</span><div class="dl-btns"><button type="button" class="btn" data-open="${xesc(mt)}">${T('Autre messagerie')}</button><button type="button" class="btn primary" data-open="${xesc(gm)}">${T('Ouvrir Gmail')}</button></div></div><p class="msg dl-msg" role="status"></p>`;
+      // téléphone : Gmail web ne sait pas ouvrir un nouveau message, seule la messagerie du téléphone est proposée
+      const touch = (() => { try { return matchMedia('(pointer:coarse)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent); } catch (_) { return false; } })();
+      box.innerHTML = `<div class="dl-pick"><span class="dl-name">${xesc(lead)}</span><div class="dl-btns"><button type="button" class="btn${touch ? ' primary' : ''}" data-open="${xesc(mt)}">${touch ? T('Ouvrir la messagerie') : T('Autre messagerie')}</button>${touch ? '' : `<button type="button" class="btn primary" data-open="${xesc(gm)}">${T('Ouvrir Gmail')}</button>`}</div></div><p class="msg dl-msg" role="status"></p>`;
     };
     const viaShare = async (subject, text) => {
       try { await navigator.share({ files: [getFile()], title: subject, text }); box.innerHTML = ''; flash(msg, T('Fichier partagé.')); }
@@ -3728,10 +3735,13 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       else if (k === 'save') { box.innerHTML = ''; await saveData(btn, msg, name, data, okText); }
       else if (k === 'mail') {
         // Gmail : la page peut recevoir l'accès quelques secondes après l'ouverture, on l'attend avant de choisir un repli
+        // le menu de partage du téléphone doit s'ouvrir tout de suite après l'appui (sinon le téléphone le refuse) : pas d'attente de Gmail s'il est disponible
+        if (mcp) { form(); return; }
+        if (shareOk(getFile())) { await viaShare(subj, body); return; }
         a.disabled = true;
-        const m = mcp || (window.claude ? await Promise.race([mcpP, new Promise(r => setTimeout(() => r(null), 4000))]) : null);
+        const m = window.claude ? await Promise.race([mcpP, new Promise(r => setTimeout(() => r(null), 4000))]) : null;
         a.disabled = false;
-        if (m) form(); else if (shareOk(getFile())) await viaShare(subj, body); else await viaMailto();
+        if (m) form(); else await viaMailto();
       }
       else if (k === 'share') await viaShare(box.querySelector('.dl-subj').value.trim() || subj, box.querySelector('.dl-body').value);
       else if (k === 'mailto') await viaMailto(box.querySelector('.dl-to') ? box.querySelector('.dl-to').value.split(/[\s,;]+/).filter(a => ADDR.test(a)).join(',') : '', box.querySelector('.dl-subj') ? box.querySelector('.dl-subj').value.trim() || subj : subj, box.querySelector('.dl-body') ? box.querySelector('.dl-body').value : body);
@@ -4005,7 +4015,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     let h = '';
     if (fin(R.p) && fin(R.q)) {
       h = P.mode === 'p' ? bigR(T('Puissance'), pwFmt(R.p), P.pu, 'power') : bigR(T('Débit'), f2(R.q), 'm³/h');
-      if (P.mode === 'q') h += bigR('', nf0.format(R.q * 1000), 'L/h') + bigR('', f1(R.q * 1000 / 60), 'L/min');
+      if (P.mode === 'q') h += `<div class="f-conv"><span>${T('soit')} <b>${nf0.format(R.q * 1000)}</b> L/h</span><span><b>${f1(R.q * 1000 / 60)}</b> L/min</span></div>`;
     }
     if (fin(R.dt)) h += bigR('ΔT', df1(R.dt), UD());
     $('#pw-res').innerHTML = h;
@@ -4084,6 +4094,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     const vol = idx ? (G.i1 - G.i0) * 1000 : NaN; // litres, d'après les index
     const time = fin(G.time) && G.time > 0 ? G.time : G.dur;
     if (!(fin(G.pcs) && G.pcs > 0 && fin(G.pci) && G.pci > 0)) return { err: T('Renseignez le PCS et le PCI du gaz.') };
+    if (fin(G.i0) && fin(G.i1) && G.i1 < G.i0) return { err: T('L\'index de fin doit être supérieur à l\'index de départ.') };
     if (!(fin(vol) && vol > 0)) return { err: T('Saisissez l\'index au départ et l\'index à la fin.') };
     const k = G.corr && fin(G.pa) && fin(G.pg) && fin(G.tg) ? ((G.pa + G.pg) / 1013.25) * (273.15 / (273.15 + G.tg)) : 1;
     const q = vol / 1000 * 3600 / time, qn = q * k;
@@ -4100,7 +4111,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
   }
   $('#g-type').addEventListener('change', e => {
     const k = e.target.value, g = GASES[k]; S.gas.type = k;
-    if (g) { S.gas.pcs = g.pcs; S.gas.pci = g.pci; S.gas.pg = g.pg; }
+    if (g) { S.gas.pcs = g.pcs; S.gas.pci = g.pci; } // la pression du gaz saisie est gardée (300 mbar par défaut, postes gaz 300 mbar)
     save(); renderGas();
   });
   numIn('g-pcs', v => { S.gas.pcs = fin(v) ? v : NaN; save(); renderGas(); });
@@ -4218,7 +4229,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     let h = '';
     if (!R.err) {
       h = bigR(T('Puissance sur PCI'), f1(R.ppci), 'kW', 'power', 'pci') + bigR(T('Puissance sur PCS'), f1(R.ppcs), 'kW', '', 'pcs') + bigR(T('Débit de gaz'), nfn.format(R.qn), 'm³/h', '', 'qn');
-      if (fin(R.pu)) h += bigR(T('Puissance utile'), f1(R.pu), 'kW', '', fin(R.etac) ? 'pue' : 'pu');
+      if (fin(R.pu)) h += bigR(fin(R.etac) ? T('Puissance utile supposée') : T('Puissance utile'), f1(R.pu), 'kW', '', fin(R.etac) ? 'pue' : 'pu');
       if (fin(R.etac)) h += bigR(T('Rendement calculé'), nf1.format(R.etac), '%', 'power', 'etac') + (fin(R.eta) ? bigR(T('Rendement théorique'), nfn.format(R.eta), '%', '', 'eta') : '');
       if (fin(R.tk) && !R.tkOff) { h += bigR(T('Rendement ticket de combustion'), nfn.format(R.tk), '%', 'power', 'tk') + (fin(R.eta) && !fin(R.etac) ? bigR(T('Rendement théorique'), nfn.format(R.eta), '%', '', 'eta') : ''); }
       if (fin(R.load)) h += bigR(T('Charge'), nf0.format(R.load), '%', '', 'load');
@@ -4226,6 +4237,8 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       if (gOpen && GHELP[gOpen] && h.includes(`data-gh="${gOpen}"`)) h += `<div class="opt-help g-ih">${T(GHELP[gOpen])}</div>`;
       const cond = /^cond/.test(G.btype || 'cond');
       if (fin(R.etac) && R.etac > (cond ? 110 : 100)) h += `<p class="err g-warn">${T(cond ? 'Rendement calculé supérieur à 110 % : impossible, même en condensation. La chaudière ne fournissait pas la charge réglée pendant le chrono : vérifiez le brûleur, ou passez en « Calculer la charge ».' : 'Rendement calculé supérieur à 100 % : impossible sans condensation. La chaudière ne fournissait pas la charge réglée pendant le chrono : vérifiez le brûleur, ou passez en « Calculer la charge ».')}${G.dur !== 72 ? ' ' + T('Passez le chrono à 72 s pour une mesure plus précise.') : ''}</p>`;
+      if (fin(R.etac) && R.etac < 80) h += `<p class="err g-warn">${T('Rendement calculé inférieur à 80 % : peu probable. Vérifiez la puissance nominale, la charge réglée et les index du compteur.')}</p>`;
+      if (fin(R.load) && R.load > 110) h += `<p class="err g-warn">${T('Charge supérieure à 110 % : la chaudière ne peut pas dépasser nettement sa puissance nominale. Vérifiez la puissance nominale saisie et les index du compteur.')}</p>`;
       if (fin(R.etam) && R.etam > (cond ? 110 : 100)) h += `<p class="err g-warn">${T(cond ? 'Rendement mesuré supérieur à 110 % : impossible, même en condensation. Vérifiez le débit d\'eau, les températures et la mesure du gaz.' : 'Rendement mesuré supérieur à 100 % : impossible sans condensation. Vérifiez le débit d\'eau, les températures et la mesure du gaz.')}${G.dur !== 72 ? ' ' + T('Passez le chrono à 72 s pour une mesure plus précise.') : ''}</p>`;
     }
     const gh = h + (R.err ? '' : `<p class="hint g-det">${T('Volume {0} L en {1} s', [nf1.format(R.vol), nf1.format(R.time)])}${R.k !== 1 ? ' · ' + T('coefficient de correction {0}', [NF({ minimumFractionDigits: 3, maximumFractionDigits: 3 }).format(R.k)]) : ''}</p>`);
@@ -4295,7 +4308,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     const D = S.dp, R = dpCalc();
     document.querySelectorAll('[data-dpu]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.dpu === D.u)));
     document.querySelectorAll('[data-dpm]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.dpm === D.mode)));
-    $('#dp-qm-w').hidden = D.mode === 'q'; $('#dp-pm-w').hidden = D.mode === 'p'; $('#dp-hint').hidden = D.mode !== 'diag'; $('#plot-dp').style.touchAction = D.mode === 'q' ? 'none' : ''; // mode débit : on glisse verticalement
+    $('#dp-qm-w').hidden = D.mode === 'q'; $('#dp-pm-w').hidden = D.mode === 'p'; $('#dp-hint').hidden = D.mode !== 'diag' || (fin(D.qm) && D.qm > 0); $('#plot-dp').style.touchAction = D.mode === 'q' ? 'none' : ''; // mode débit : on glisse verticalement
     $('#dp-qm-l').textContent = D.mode === 'p' ? T('Débit') : T('Débit mesuré');
     document.querySelectorAll('.uP').forEach(el => { el.textContent = D.u; });
     const pv = v => (fin(v) ? String(+pTo(v).toPrecision(6)) : '');
@@ -4305,13 +4318,13 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     if (!R.err) {
       if (fin(R.qcalc)) h += bigR(T('Débit calculé'), f2(R.qcalc), 'm³/h', 'return') + bigR('', nf0.format(R.qcalc * 1000), 'L/h');
       if (fin(R.pexp)) h += bigR(T('Perte de charge attendue'), pFmt(R.pexp), D.u, 'return');
-      if (fin(R.ratio)) h += bigR(T('Écart avec la perte de charge attendue'), '× ' + nf1.format(R.ratio), '', R.level === 'ok' ? '' : 'supply') + `<p class="hint g-det" style="flex-basis:100%;margin:0">${T('Perte de charge mesurée / perte de charge attendue au débit mesuré. 1 = normal ; au-delà de 1,5 : encrassement.')}</p>`;
+      if (fin(R.ratio)) h += bigR(T('Écart avec la perte de charge attendue'), nf1.format(R.ratio), R.ratio >= 1 ? T('fois plus élevée') : T('fois la valeur attendue'), R.level === 'ok' ? '' : 'supply') + (R.text ? `<p class="verdict dp-verdict-in ${({ ok: 'ok', watch: 'warn', low: 'warn' })[R.level] || 'bad'}">${R.text}</p>` : '') + `<p class="hint g-det" style="flex-basis:100%;margin:0">${T('Perte de charge mesurée / perte de charge attendue au débit mesuré. 1 = normal ; au-delà de 1,5 : encrassement.')}</p>`;
       if (fin(R.qclean)) h += bigR(T('Débit si l\'appareil était propre'), f2(R.qclean), 'm³/h');
       h += bigR(T('Kv du fabricant'), f1(R.kvn), 'm³/h');
       if (fin(R.kvm)) h += bigR(T('Kv mesuré'), f1(R.kvm), 'm³/h');
     }
     $('#dp-res').innerHTML = h;
-    const v = $('#dp-verdict'); v.hidden = !R.text; if (R.text) { v.textContent = R.text; v.className = 'verdict ' + ({ ok: 'ok', watch: 'warn', low: 'warn' }[R.level] || 'bad'); }
+    const v = $('#dp-verdict'); v.hidden = true; 
     $('#dp-msg').innerHTML = R.err ? `<span class="hint">${R.err}</span>` : R.need ? `<span class="hint">${R.need}</span>` : (D.mode === 'diag' && !fin(D.qm) && !fin(D.pm) ? `<span class="hint">${T('Saisissez le débit et la perte de charge mesurés pour le diagnostic.')}</span>` : '');
     const sp = dpSpec(R);
     $('#leg-dp').innerHTML = sp ? `<span class="lg-btn lg-static"><i style="color:var(--return)"></i><span>${T('Courbe du fabricant')}</span></span><span class="lg-btn lg-static"><i class="dash2" style="color:var(--muted)"></i><span>${T('Seuil d\'encrassement (× 1,5)')}</span></span>` + (fin(D.pm) && D.mode !== 'p' ? `<span class="lg-btn lg-static"><i class="ptic" style="background:var(--supply)"></i><span>${T('Mesure')}</span></span>` : '') : '';
@@ -4355,10 +4368,11 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     const vm = F.fm === 'vol', idx = !vm && fin(F.i0) && fin(F.i1) && F.i1 > F.i0;
     const volL = vm ? (fin(F.vol) ? F.vol * f : NaN) : idx ? (F.i1 - F.i0) * f : NaN;
     const time = fin(F.time) && F.time > 0 ? F.time : vm ? NaN : F.dur;
+    if (!vm && fin(F.i0) && fin(F.i1) && F.i1 < F.i0) return { err: T('L\'index de fin doit être supérieur à l\'index de départ.') };
     if (!(fin(volL) && volL > 0)) return { err: vm ? T('Saisissez le volume compté.') : T('Saisissez les index du compteur.') };
     if (!fin(time)) return { err: T('Lancez le chrono, puis appuyez sur « Fin », ou saisissez la durée.') };
     const ls = volL / time; // L/s
-    return { idx, volL, time, ls, main: ls * FTU[F.tu] / f };
+    return { idx, volL, time, ls, main: ls * FTU[F.tu] / f, assumed: !vm && !(fin(F.time) && F.time > 0) };
   }
   const flowFmt = v => NF({ maximumFractionDigits: v >= 100 ? 1 : v >= 1 ? 2 : 4, minimumFractionDigits: 0 }).format(v);
   document.querySelectorAll('[data-fvu]').forEach(b => b.addEventListener('click', () => {
@@ -4421,7 +4435,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       h = bigR(T('Débit'), flowFmt(R.main), `${fvLab()}/${ftLab(F.tu)}`, 'return');
       const all = [['m³/h', R.ls * 3.6], ['L/h', R.ls * 3600], ['L/min', R.ls * 60], ['L/s', R.ls]];
       h += `<div class="f-conv">${all.map(([u, v]) => `<span><b>${flowFmt(v)}</b> ${u}</span>`).join('')}</div>`;
-      h += `<p class="hint g-det">${T('Volume {0} L en {1} s', [nf1.format(R.volL), nf1.format(R.time)])}</p>`;
+      h += `<p class="hint g-det">${T('Volume {0} L en {1} s', [nf1.format(R.volL), nf1.format(R.time)])}${R.assumed ? ' ' + T('(durée supposée : le chrono n\'a pas été lancé)') : ''}</p>`;
     }
     $('#f-res').innerHTML = h;
     if (R.err && !$('#f-msg').dataset.flash) $('#f-msg').innerHTML = `<span class="hint">${R.err}</span>`;
@@ -4542,13 +4556,15 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       if (D.mode === 'p' && fin(D.qm)) mes.push([T('Débit'), `${f2(D.qm)} m³/h`]);
       if (D.mode === 'diag' && fin(D.qm)) mes.push([T('Débit mesuré'), `${f2(D.qm)} m³/h`]);
       if (D.mode === 'diag' && fin(D.pm)) mes.push([T('Perte de charge mesurée'), `${pFmt(D.pm)} ${D.u}`, 'supply']);
-      if (fin(R.pexp)) mes.push([T('Perte de charge attendue'), `${pFmt(R.pexp)} ${D.u}`, 'return']);
-      if (fin(R.ratio)) mes.push([T('Écart avec la perte de charge attendue'), R.ratio >= 1 ? T('{0} fois plus élevée', [nf1.format(R.ratio)]) : T('{0} fois la valeur attendue', [nf1.format(R.ratio)])]);
-      if (fin(R.kvm)) mes.push([T('Kv mesuré'), `${f1(R.kvm)} m³/h`]);
-      if (fin(R.qclean)) mes.push([T('Débit si l\'appareil était propre'), `${f2(R.qclean)} m³/h`]);
+      const out = D.mode === 'diag' ? [] : mes;
+      if (fin(R.pexp)) out.push([T('Perte de charge attendue'), `${pFmt(R.pexp)} ${D.u}`, 'return']);
+      if (fin(R.ratio)) out.push([T('Écart avec la perte de charge attendue'), R.ratio >= 1 ? T('{0} fois plus élevée', [nf1.format(R.ratio)]) : T('{0} fois la valeur attendue', [nf1.format(R.ratio)])]);
+      if (fin(R.kvm)) out.push([T('Kv mesuré'), `${f1(R.kvm)} m³/h`]);
+      if (fin(R.qclean)) out.push([T('Débit si l\'appareil était propre'), `${f2(R.qclean)} m³/h`]);
       const b = [{ h: T('Données du fabricant'), rows }];
-      if (mes.length) b.push({ h: D.mode === 'diag' ? T('Mesure sur l\'installation') : T('Résultat'), rows: mes });
+      if (out.length) b.push({ h: T('Résultat'), rows: out });
       if (R.text) b.push({ text: R.text, bold: true, col: R.level === 'ok' ? 'ink' : 'supply' });
+      if (D.mode === 'diag' && mes.length) b.push({ h: T('Mesure sur l\'installation'), rows: mes });
       b.push({ h: T('Perte de charge selon le débit'), chart: dpSpec(R), legend: [[T('Courbe du fabricant'), 'return'], [T('Seuil d\'encrassement (× 1,5)'), 'muted', true]], note: T('Axe horizontal : débit (m³/h). Perte de charge attendue = perte de charge nominale × (débit / débit nominal)².') });
       if (fin(R.ratio)) b.splice(b.findIndex(x => x.chart), 0, { text: T('Écart = perte de charge mesurée / perte de charge attendue au débit mesuré (courbe du fabricant). 1 = normal ; au-delà de 1,5 : encrassement.') });
       return b;
@@ -4556,7 +4572,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
     if (k === 'fod') {
       const O = S.fod, R = fodCalc();
       if (R.err) return null;
-      const b = [{ h: T('Gicleur et pompe'), rows: [[T('Calibre du gicleur'), `${nfn.format(O.cal)} USgal/h`], [T('Pression de référence du gicleur'), `${nfn.format(O.pref)} bar`], [T('Pression de pompe'), `${nfn.format(O.p)} bar`], [T('Densité du fioul'), `${nfn.format(O.rho)} kg/L`], [T('PCI du fioul'), `${nfn.format(O.pci)} kWh/kg`]] }];
+      const b = [{ h: T('Gicleur et pompe'), rows: [[T('Calibre du gicleur'), `${f2(O.cal)} USgal/h`], [T('Pression de référence du gicleur'), `${nfn.format(O.pref)} bar`], [T('Pression de pompe'), `${nfn.format(O.p)} bar`], [T('Densité du fioul'), `${nfn.format(O.rho)} kg/L`], [T('PCI du fioul'), `${nfn.format(O.pci)} kWh/kg`]] }];
       const res = [[T('Débit du gicleur'), `${f2(R.gal)} USgal/h`], [T('Débit de fioul'), `${f2(R.lh)} L/h · ${f2(R.kgh)} kg/h`], [T('Puissance du brûleur (sur PCI)'), `${f1(R.pb)} kW`, 'power']];
       if (fin(R.pu)) res.push([T('Rendement'), `${nfn.format(R.eta)} %`], [T('Puissance utile'), `${f1(R.pu)} kW`, 'power']);
       b.push({ h: T('Résultat'), rows: res });
@@ -4575,7 +4591,7 @@ textarea.fallback{width:100%;height:120px;margin-top:10px;font:12px ui-monospace
       const mes = [];
       if (R.idx) mes.push([T('Index au départ'), `${flTxt(F.i0)} ${fvLab()}`], [T('Index à la fin'), `${flTxt(F.i1)} ${fvLab()}`]);
       mes.push([T('Volume mesuré'), `${nf1.format(R.volL)} L`], [T('Durée'), `${nf1.format(R.time)} s`]);
-      return [{ h: T('Mesure'), rows: mes }, { h: T('Résultat'), rows: [[T('Débit'), `${flowFmt(R.main)} ${fvLab()}/${ftLab(F.tu)}`, 'return'], ['m³/h', flowFmt(R.ls * 3.6)], ['L/h', flowFmt(R.ls * 3600)], ['L/min', flowFmt(R.ls * 60)], ['L/s', flowFmt(R.ls)]] },
+      return [{ h: T('Mesure'), rows: mes }, { h: T('Résultat'), rows: [[T('Débit'), `${flowFmt(R.main)} ${fvLab()}/${ftLab(F.tu)}`, 'return']].concat([['m³/h', R.ls * 3.6], ['L/h', R.ls * 3600], ['L/min', R.ls * 60], ['L/s', R.ls]].filter(([u]) => u !== `${fvLab()}/${ftLab(F.tu)}`).map(([u, v]) => [u, flowFmt(v)])) },
         { text: T('Débit = volume écoulé au compteur / durée de la mesure.') }];
     }
     return null;
