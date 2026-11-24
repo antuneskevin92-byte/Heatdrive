@@ -1224,7 +1224,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       const t = Array.isArray(c && c.t) ? c.t.slice(0, S_MAX).map(num) : [], dd = Array.isArray(c && c.d) ? c.d.slice(0, S_MAX).map(num) : [];
       while (t.length < 2) t.push(NaN); while (dd.length < t.length) dd.push(NaN);
       const n = t.length, a = Array.isArray(c.a) ? t.map((_, i) => c.a[i] === true) : t.map((_, i) => c.auto === true && i > 0 && i < n - 1);
-      const r = { name: typeof c.name === 'string' ? c.name.slice(0, 40) : '', t, d: dd.slice(0, n), a };
+      const r = { name: typeof c.name === 'string' ? c.name.slice(0, 40) : '', t, d: dd.slice(0, n), a }; if (c.off === true) r.off = true;
       sKeep2(r); return r;
     });
     // ancienne courbe proposée par défaut (−7 → 70, 20 → 20) restée telle quelle : remplacée par la nouvelle
@@ -3320,7 +3320,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
 
   /* =================== Accueil et modules =================== */
   /* ---------- Modules favoris de l'accueil ---------- */
-  const APP_VER = '0.76.0 (TEST)';
+  const APP_VER = '0.77.0 (TEST)';
   const OFF = ['fod']; // modules retirés pour l'instant (code conservé) : Puissance fioul revient en V1.00
   const MODS = ['simple', 'expert', 'power', 'gas', 'dp', 'flow', 'fod'];
   const HKEY = KEY + '-home';
@@ -3790,6 +3790,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   const sName = k => ((S.simple.curves[k] && S.simple.curves[k].name) || '').trim() || T('Courbe {0}', [k + 1]);
   const sFull = c => c.t.every(fin) && c.d.every(fin);
   const sValid = c => c.t.length >= 2 && sFull(c) && c.t.every((t, i) => i === 0 || t > c.t[i - 1]);
+  const sShow = c => sValid(c) && !c.off; // courbe affichée (graphique, tableau, PDF, Excel)
   const sAt = (c, x) => interp(c.t, c.d, x, false).y; // au-delà des points : pente du premier ou du dernier segment
   const sIn = () => true; // les courbes vont jusqu'aux bords du graphique
   const S_ADD = [[10, 0, -5, 15], [-7, 0, 10, 20]]; // T° extérieures proposées pour les points ajoutés, dans cet ordre (courbe 1, courbe 2)
@@ -3912,7 +3913,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     const inp = $(`#s-x-${S.simple.xs.length - 1}`); if (inp) inp.focus();
   });
   function simpleSpec() {
-    const cs = S.simple.curves.map((c, k) => ({ c, k })).filter(o => sValid(o.c));
+    const cs = S.simple.curves.map((c, k) => ({ c, k })).filter(o => sShow(o.c));
     if (!cs.length) return null;
     const allT = cs.flatMap(o => o.c.t), allD = cs.flatMap(o => o.c.d).map(toU);
     // axe toujours de −10 à 21 °C ext., élargi seulement pour montrer un point ou une lecture en dehors
@@ -3931,7 +3932,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   }
   // tableau de valeurs de la courbe simplifiée : de −10 à 20 °C au pas choisi, plus les T° des points
   function sValRows() {
-    const st = S.simple.step || 5, ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sValid(o.c));
+    const st = S.simple.step || 5, ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sShow(o.c));
     if (!ok.length) return null;
     const map = new Map(), a = toU(-10), b = toU(20);
     for (let v = Math.ceil(a / st - 1e-9) * st; v <= b + 1e-9; v += st) map.set(r2(v), false);
@@ -3947,6 +3948,8 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       V.rows.map(r => `<tr${r.pt ? ' class="hl"' : ''}><td>${fx(r.x)} ${UT()}</td>${r.d.map((d, j) => `<td class="d" style="color:var(--${SC(V.ok[j].i)})">${tf1(d)}</td>`).join('')}</tr>`).join('') + '</tbody>';
   }
   $('#s-step').addEventListener('change', e => { S.simple.step = +e.target.value; save(); renderSimple(); });
+  let sLegC = '';
+  $('#leg-s').addEventListener('click', e => { const b = e.target.closest('[data-sk]'); if (!b) return; const c = S.simple.curves[+b.dataset.sk]; if (!c) return; if (c.off) delete c.off; else c.off = true; save(); renderSimple(); });
   function renderSimple() {
     if (sUnit !== S.unit) buildSimple();
     sSync();
@@ -3955,9 +3958,10 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     if (sReadsN !== S.simple.xs.length || sUnit !== S.unit) buildReads();
     S.simple.xs.forEach((x, i) => setVal('s-x-' + i, tin(x)));
     const sp = simpleSpec();
-    $('#leg-s').innerHTML = cs.map((c, k) => (sValid(c) ? `<span class="lg-btn lg-static"><i style="color:var(--${SC(k)})"></i><span>${xesc(sName(k))}</span></span>` : '')).join('');
+    const sl = cs.map((c, k) => (sValid(c) ? `<button type="button" class="lg-btn" data-sk="${k}" aria-pressed="${!c.off}" title="${c.off ? T('Afficher') : T('Masquer')} : ${xesc(sName(k))}"><i style="color:var(--${SC(k)})"></i><span>${xesc(sName(k))}</span></button>` : '')).join('');
+    if (sl !== sLegC) { sLegC = sl; $('#leg-s').innerHTML = sl; } // ne pas reconstruire la légende pendant un clic
     renderSVals();
-    if (!sp) clearChart('s', chartH(), T('Corrigez les points de la courbe pour afficher le graphique.'));
+    if (!sp) clearChart('s', chartH(), cs.some(sValid) ? T('Toutes les courbes sont masquées : touchez une courbe dans la légende pour l\'afficher.') : T('Corrigez les points de la courbe pour afficher le graphique.'));
     else drawChart('s', sp, chartH(), 22, x => `${fx(x)} ${UT()} ${T('ext.')}` + sp.cs.map(({ c, k }) => `<br><span class="c-${SC(k)}">${xesc(sName(k))} ${sIn(c, fromU(x)) ? tf1(sAt(c, fromU(x))) + ' ' + UT() : T('hors de la courbe')}</span>`).join(''));
     document.querySelectorAll('#s-reads .s-rd').forEach(row => {
       const x = S.simple.xs[+row.dataset.r];
@@ -4524,7 +4528,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   }
   function modBlocks0(k) {
     if (k === 'simple') {
-      const ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sValid(o.c));
+      const ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sShow(o.c));
       if (!ok.length) return null;
       const b = ok.map(({ c, i }) => ({ h: sName(i), table: { head: [T('Point'), T('T° ext. ({0})', [UT()]), T('Départ ({0})', [UT()])], rows: c.t.map((t, j) => [T('Point {0}', [j + 1]), tf1(t), tf1(c.d[j])]), cols: [null, null, SC(i)] } }));
       const sp = simpleSpec(), xs = S.simple.xs.filter(fin);
@@ -4744,7 +4748,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       note(T('Cases jaunes : valeurs saisies, modifiables. Débit = volume / durée. Les résultats se recalculent aussitôt.'));
     }
     if (k === 'simple') {
-      const ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sValid(o.c));
+      const ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sShow(o.c));
       if (!ok.length) return null;
       const sp = simpleSpec(), series = [], refs = [];
       ok.forEach(({ c, i }) => {
