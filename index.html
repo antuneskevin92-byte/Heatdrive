@@ -9,18 +9,19 @@
 :root{
   --bg:#F2F4F6; --surface:#FFFFFF; --ink:#131A21; --muted:#5A6570; --line:#D7DDE3; --soft:#E9EDF1; --band:#EDF0F3;
   --supply:#C33A2C; --return:#2360C0; --power:#7546B3; --bad:#A3221A; --c2:#0E8A6B; --ok:#1E7B3F; --warn:#A35F00;
+  --c5:#B26A00; --c6:#C2367F; --c7:#7A5230; --c8:#4B5563;
   --f-display:"Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0D1216; --surface:#151C22; --ink:#E6EBF0; --muted:#93A0AC; --line:#2A343D; --soft:#1E262D; --band:#192128;
-    --supply:#FF6B57; --return:#63A0FF; --power:#B78DF2; --bad:#FF8A7A; --c2:#3DCCA4; --ok:#5BC77F; --warn:#F2A64A; color-scheme:dark;
+    --supply:#FF6B57; --return:#63A0FF; --power:#B78DF2; --bad:#FF8A7A; --c2:#3DCCA4; --ok:#5BC77F; --warn:#F2A64A; --c5:#F2B84B; --c6:#F27AB5; --c7:#C9A27E; --c8:#A3ADB8; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0D1216; --surface:#151C22; --ink:#E6EBF0; --muted:#93A0AC; --line:#2A343D; --soft:#1E262D; --band:#192128;
-  --supply:#FF6B57; --return:#63A0FF; --power:#B78DF2; --bad:#FF8A7A; --c2:#3DCCA4; --ok:#5BC77F; --warn:#F2A64A; color-scheme:dark;
+  --supply:#FF6B57; --return:#63A0FF; --power:#B78DF2; --bad:#FF8A7A; --c2:#3DCCA4; --ok:#5BC77F; --warn:#F2A64A; --c5:#F2B84B; --c6:#F27AB5; --c7:#C9A27E; --c8:#A3ADB8; color-scheme:dark;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -537,7 +538,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     </header>
     <div class="home-set"><button type="button" class="btn set-btn" data-go="set"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Paramètres</span></button><span class="set-who" id="set-who"></span></div>
     <nav class="tiles-h" aria-label="Modules">
-      <button type="button" class="tile-h" data-go="simple"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 8 L14 8 L30 26 L33 26" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16 L14 16 L30 29 L33 29" fill="none" stroke="var(--c2)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="th-t">Courbe de chauffe simplifiée</span><span class="th-d">Départ selon la T° extérieure, de 2 à 6 points. Deux courbes superposées pour comparer le primaire et le secondaire.</span></button>
+      <button type="button" class="tile-h" data-go="simple"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 8 L14 8 L30 26 L33 26" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16 L14 16 L30 29 L33 29" fill="none" stroke="var(--c2)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="th-t">Courbe de chauffe simplifiée</span><span class="th-d">Départ selon la T° extérieure, de 2 à 6 points. Autant de courbes superposées que voulu pour comparer les circuits.</span></button>
       <button type="button" class="tile-h" data-go="expert"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 7 L12 7 L22 18 L32 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16 L12 16 L22 22 L32 26" fill="none" stroke="var(--return)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="2.6" fill="currentColor"/><circle cx="22" cy="18" r="2.6" fill="currentColor"/></svg><span class="th-t">Courbe de chauffe expert</span><span class="th-d">Émetteurs, de 2 à 6 points, départ et retour, puissance, options et points de fonctionnement.</span></button>
       <button type="button" class="tile-h" data-go="power"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M20 3 L9 20 L17 20 L15 33 L27 15 L19 15 Z" fill="none" stroke="var(--power)" stroke-width="2.4" stroke-linejoin="round"/></svg><span class="th-t">Calcul de puissance</span><span class="th-d">Puissance ou débit d'un circuit d'eau à partir du départ et du retour : P = 1,163 × débit × ΔT.</span></button>
       <button type="button" class="tile-h" data-go="gas"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M18 20 L18 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M14 4 L22 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span class="th-t">Top gaz</span><span class="th-d">Puissance d'une chaudière mesurée au compteur gaz, avec un chrono de 36 ou 72 secondes, PCS et PCI.</span></button>
@@ -603,7 +604,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     <div class="mgrid">
       <div class="mcol">
         <div id="s-curves" class="mstack"></div>
-        <button type="button" class="btn" id="s-add-curve">+ Ajouter une deuxième courbe</button>
+        <button type="button" class="btn" id="s-add-curve">+ Ajouter une courbe</button>
         <section class="panel" id="s-vals-p">
           <div class="ph"><h2>Tableau de valeurs</h2><label class="sr" for="s-step">Pas de température</label><select id="s-step" class="btn"><option value="1">Pas de 1 °C</option><option value="2">Pas de 2 °C</option><option value="5">Pas de 5 °C</option></select></div>
           <div class="tw"><table class="vals" id="s-vals"></table></div>
@@ -1219,7 +1220,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   const fixSimple = o => {
     const d = SIMPLE_DEF(); if (!o || !Array.isArray(o.curves) || !o.curves.length) return d;
     const num = v => (typeof v === 'number' ? v : NaN);
-    d.curves = o.curves.slice(0, 2).map(c => {
+    d.curves = o.curves.slice(0, 50).map(c => {
       const t = Array.isArray(c && c.t) ? c.t.slice(0, S_MAX).map(num) : [], dd = Array.isArray(c && c.d) ? c.d.slice(0, S_MAX).map(num) : [];
       while (t.length < 2) t.push(NaN); while (dd.length < t.length) dd.push(NaN);
       const n = t.length, a = Array.isArray(c.a) ? t.map((_, i) => c.a[i] === true) : t.map((_, i) => c.auto === true && i > 0 && i < n - 1);
@@ -2440,7 +2441,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     .replace(/[‘’]/g, '\'').replace(/[“”]/g, '"').replace(/…/g, '...').replace(/→/g, '->')
     .replace(/ΔT/g, 'Delta T').replace(/[^\x20-\x7e\xa0-\xffŒœ€]/g, '');
   const PC = { ink: [19, 26, 33], muted: [90, 101, 112], line: [215, 221, 227], soft: [233, 237, 241], band: [240, 242, 245], white: [255, 255, 255],
-    supply: [195, 58, 44], return: [35, 96, 192], power: [117, 70, 179], c2: [14, 138, 107] };
+    supply: [195, 58, 44], return: [35, 96, 192], power: [117, 70, 179], c2: [14, 138, 107], c5: [178, 106, 0], c6: [194, 54, 127], c7: [122, 82, 48], c8: [75, 85, 99] };
   const tint = (c, a) => c.map(v => Math.round(v + (255 - v) * a));
 
   function pdfChart(doc, x0, y0, w, h, o) {
@@ -2867,7 +2868,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   // Graphique Excel natif : séries [{ kind: line|pts|op, nm, c, axis, dash, dash2, faint, lbl, hideLeg, x: { r, v }, y: { r, v } }]
   function chartXml(series, sp, tU) {
     // XML du graphique
-    const HEX = { supply: 'C33A2C', return: '2360C0', power: '7546B3', c2: '0E8A6B', muted: '6B7280' }, INK = '1F2328', GRID = 'E3E5E8';
+    const HEX = { supply: 'C33A2C', return: '2360C0', power: '7546B3', c2: '0E8A6B', c5: 'B26A00', c6: 'C2367F', c7: '7A5230', c8: '4B5563', muted: '6B7280' }, INK = '1F2328', GRID = 'E3E5E8';
     const tx = (sz, col, b) => `<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="${sz}"${b ? ' b="1"' : ' b="0"'}>${col ? `<a:solidFill><a:srgbClr val="${col}"/></a:solidFill>` : ''}</a:defRPr></a:pPr><a:endParaRPr lang="fr-FR"/></a:p></c:txPr>`;
     if (sp.xMark != null && sp.xMark >= sp.xd.min && sp.xMark <= sp.xd.max && !series.some(x => x.mark)) series.unshift({ kind: 'line', mark: true, nm: `${fx(sp.xMark)} ${tU}`, c: 'muted', dash: true, faint: true, axis: 1, hideLeg: true, x: sp.markCells ? { r: sp.markCells.x, v: [r1(sp.xMark), r1(sp.xMark)] } : { lit: true, v: [r1(sp.xMark), r1(sp.xMark)] }, y: sp.markCells ? { r: sp.markCells.y, v: [sp.yd.min, sp.yd.max] } : { lit: true, v: [sp.yd.min, sp.yd.max] } });
     const numLit = d => `<c:numLit><c:formatCode>General</c:formatCode><c:ptCount val="${d.v.length}"/>${d.v.map((v, i) => `<c:pt idx="${i}"><c:v>${v}</c:v></c:pt>`).join('')}</c:numLit>`;
@@ -3319,7 +3320,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
 
   /* =================== Accueil et modules =================== */
   /* ---------- Modules favoris de l'accueil ---------- */
-  const APP_VER = '0.75.0 (TEST)';
+  const APP_VER = '0.76.0 (TEST)';
   const OFF = ['fod']; // modules retirés pour l'instant (code conservé) : Puissance fioul revient en V1.00
   const MODS = ['simple', 'expert', 'power', 'gas', 'dp', 'flow', 'fod'];
   const HKEY = KEY + '-home';
@@ -3785,7 +3786,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   });
 
   /* ---------- Courbe de chauffe simplifiée ---------- */
-  const SCOL = ['supply', 'c2'];
+  const SCOL0 = ['supply', 'c2', 'return', 'power', 'c5', 'c6', 'c7', 'c8'], SC = k => SCOL0[k % SCOL0.length];
   const sName = k => ((S.simple.curves[k] && S.simple.curves[k].name) || '').trim() || T('Courbe {0}', [k + 1]);
   const sFull = c => c.t.every(fin) && c.d.every(fin);
   const sValid = c => c.t.length >= 2 && sFull(c) && c.t.every((t, i) => i === 0 || t > c.t[i - 1]);
@@ -3834,7 +3835,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
   function buildSimple() {
     sUnit = S.unit;
     $('#s-curves').innerHTML = S.simple.curves.map((c, k) => { const n = c.t.length; return `<section class="panel scurve" data-c="${k}">
-      <div class="ph"><h2><span class="sw" style="background:var(--${SCOL[k]})"></span>${T('Courbe {0}', [k + 1])}</h2>${k ? `<button type="button" class="btn sm-btn" data-sdelc="${k}">${T('Retirer cette courbe')}</button>` : ''}</div>
+      <div class="ph"><h2><span class="sw" style="background:var(--${SC(k)})"></span>${T('Courbe {0}', [k + 1])}</h2>${k ? `<button type="button" class="btn sm-btn" data-sdelc="${k}">${T('Retirer cette courbe')}</button>` : ''}</div>
       <label class="pdf-name"><span class="lab">${T('Nom (facultatif)')}</span><input type="text" data-sname="${k}" maxlength="40" autocomplete="off" placeholder="${xesc(k ? T('ex. Secondaire') : T('ex. Primaire'))}" value="${xesc(c.name)}"></label>
       <div class="tw"><table class="pts stab"><thead><tr><th><span class="sr">${T('Point')}</span></th><th scope="col">${T('T° ext. ({0})', [UT()])}</th><th scope="col">${T('Départ ({0})', [UT()])}</th>${n > 2 ? `<th><span class="sr">${T('Auto')}</span></th>` : ''}</tr></thead><tbody>${c.t.map((t, i) => `
         <tr><th scope="row"><span class="rl">${n > 2 ? `<button type="button" class="q-del" data-sdel="${k}:${i}" aria-label="${T('Retirer le point {0}', [i + 1])}">×</button>` : ''}${T('Point {0}', [i + 1])}</span></th><td><span class="tin"><button type="button" class="pm" tabindex="-1" aria-label="${T('Changer le signe')}">±</button><input type="number" step="any" data-sc="${k}" data-sk="t" data-si="${i}" value="${tin(t)}" aria-label="${xesc(T('T° ext. ({0})', [UT()]))} · ${T('Point {0}', [i + 1])}"></span></td><td><input type="number" step="any" inputmode="decimal"${c.a[i] ? ' class="calc"' : ''} data-sc="${k}" data-sk="d" data-si="${i}" value="${tin(c.d[i])}" aria-label="${xesc(T('Départ ({0})', [UT()]))} · ${T('Point {0}', [i + 1])}"></td>${n > 2 ? `<td class="s-au"><button type="button" class="chip" data-sauto="${k}:${i}" aria-pressed="${!!c.a[i]}">${T('Auto')}</button></td>` : ''}</tr>`).join('')}
@@ -3842,7 +3843,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       <div class="q-actions s-act">${n < S_MAX ? `<button type="button" class="btn" data-sadd="${k}">${T('+ 1 point')}</button>` : ''}</div>
       ${n > 2 ? `<p class="hint" data-shint="${k}"${sAutoOn(c) ? '' : ' hidden'}>${T('Cases en pointillés : départs calculés sur la courbe qui passe par les points saisis. Tapez une valeur pour la remplacer ; « Auto » revient au calcul.')}</p>` : ''}
       <p class="msg" data-serr="${k}"></p></section>`; }).join('');
-    $('#s-add-curve').hidden = S.simple.curves.length > 1;
+    $('#s-add-curve').hidden = false;
   }
   $('#s-curves').addEventListener('input', e => {
     const el = e.target;
@@ -3884,8 +3885,9 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     save(); buildSimple(); renderSimple();
   });
   $('#s-add-curve').addEventListener('click', () => {
-    // deuxième courbe proposée : −5 → 65 et 15 → 35 °C
-    S.simple.curves.push({ name: '', t: [-5, 15], d: [65, 35], a: [false, false] });
+    // deuxième courbe proposée : −5 → 65 et 15 → 35 °C ; les suivantes : −7 → départ plus bas à chaque courbe, 20 → 20 °C
+    const nc = S.simple.curves.length;
+    S.simple.curves.push(nc === 1 ? { name: '', t: [-5, 15], d: [65, 35], a: [false, false] } : { name: '', t: [-7, 20], d: [Math.max(30, 75 - 8 * nc), 20], a: [false, false] });
     save(); buildSimple(); renderSimple();
   });
   // points de lecture (jusqu'à 6) : T° extérieure saisie, départs lus sur chaque courbe
@@ -3921,10 +3923,10 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     cs.forEach(({ c }) => allD.push(toU(sAt(c, x0)), toU(sAt(c, x1))));
     const mn = Math.min(...allD), mx = Math.max(...allD);
     const yd = niceDomain(mn - (mx - mn) * 0.06, mx + (mx - mn) * 0.1, 6);
-    const lines = cs.map(({ c, k }) => ({ c: SCOL[k], nm: sName(k), pts: [[xd.min, toU(sAt(c, x0))]].concat(c.t.map((t, i) => [toU(t), toU(c.d[i])]), [[xd.max, toU(sAt(c, x1))]]) }));
-    const markers = cs.flatMap(({ c, k }) => c.t.map((t, i) => ({ x: toU(t), y: toU(c.d[i]), c: SCOL[k], lab: tf1(c.d[i]) })));
+    const lines = cs.map(({ c, k }) => ({ c: SC(k), nm: sName(k), pts: [[xd.min, toU(sAt(c, x0))]].concat(c.t.map((t, i) => [toU(t), toU(c.d[i])]), [[xd.max, toU(sAt(c, x1))]]) }));
+    const markers = cs.flatMap(({ c, k }) => c.t.map((t, i) => ({ x: toU(t), y: toU(c.d[i]), c: SC(k), lab: tf1(c.d[i]) })));
     const xs = S.simple.xs.map((x, i) => ({ x, i })).filter(o => fin(o.x));
-    const cur = xs.map(({ x, i }) => ({ i, x: toU(x), main: xs.length === 1, vals: cs.filter(({ c }) => sIn(c, x)).map(({ c, k }) => ({ y: toU(sAt(c, x)), c: SCOL[k], text: tf1(sAt(c, x)) + ' ' + UT() })) }));
+    const cur = xs.map(({ x, i }) => ({ i, x: toU(x), main: xs.length === 1, vals: cs.filter(({ c }) => sIn(c, x)).map(({ c, k }) => ({ y: toU(sAt(c, x)), c: SC(k), text: tf1(sAt(c, x)) + ' ' + UT() })) }));
     return { xd, yd, offBand: null, bands: [], guides: [], lines, markers, y2: null, cur, xMark: toU(-7), lbl: true, refLabel: null, cs };
   }
   // tableau de valeurs de la courbe simplifiée : de −10 à 20 °C au pas choisi, plus les T° des points
@@ -3941,8 +3943,8 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     const sel = $('#s-step'); if (sel.value !== String(S.simple.step || 5)) sel.value = String(S.simple.step || 5);
     const V = sValRows(), tb = $('#s-vals');
     if (!V) { tb.innerHTML = ''; return; }
-    tb.innerHTML = `<thead><tr><th scope="col">${T('T° ext. ({0})', [UT()])}</th>${V.ok.map(({ i }) => `<th scope="col" class="c-${SCOL[i]}">${xesc(sName(i))}</th>`).join('')}</tr></thead><tbody>` +
-      V.rows.map(r => `<tr${r.pt ? ' class="hl"' : ''}><td>${fx(r.x)} ${UT()}</td>${r.d.map((d, j) => `<td class="d" style="color:var(--${SCOL[V.ok[j].i]})">${tf1(d)}</td>`).join('')}</tr>`).join('') + '</tbody>';
+    tb.innerHTML = `<thead><tr><th scope="col">${T('T° ext. ({0})', [UT()])}</th>${V.ok.map(({ i }) => `<th scope="col" class="c-${SC(i)}">${xesc(sName(i))}</th>`).join('')}</tr></thead><tbody>` +
+      V.rows.map(r => `<tr${r.pt ? ' class="hl"' : ''}><td>${fx(r.x)} ${UT()}</td>${r.d.map((d, j) => `<td class="d" style="color:var(--${SC(V.ok[j].i)})">${tf1(d)}</td>`).join('')}</tr>`).join('') + '</tbody>';
   }
   $('#s-step').addEventListener('change', e => { S.simple.step = +e.target.value; save(); renderSimple(); });
   function renderSimple() {
@@ -3953,13 +3955,13 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     if (sReadsN !== S.simple.xs.length || sUnit !== S.unit) buildReads();
     S.simple.xs.forEach((x, i) => setVal('s-x-' + i, tin(x)));
     const sp = simpleSpec();
-    $('#leg-s').innerHTML = cs.map((c, k) => (sValid(c) ? `<span class="lg-btn lg-static"><i style="color:var(--${SCOL[k]})"></i><span>${xesc(sName(k))}</span></span>` : '')).join('');
+    $('#leg-s').innerHTML = cs.map((c, k) => (sValid(c) ? `<span class="lg-btn lg-static"><i style="color:var(--${SC(k)})"></i><span>${xesc(sName(k))}</span></span>` : '')).join('');
     renderSVals();
     if (!sp) clearChart('s', chartH(), T('Corrigez les points de la courbe pour afficher le graphique.'));
-    else drawChart('s', sp, chartH(), 22, x => `${fx(x)} ${UT()} ${T('ext.')}` + sp.cs.map(({ c, k }) => `<br><span class="c-${SCOL[k]}">${xesc(sName(k))} ${sIn(c, fromU(x)) ? tf1(sAt(c, fromU(x))) + ' ' + UT() : T('hors de la courbe')}</span>`).join(''));
+    else drawChart('s', sp, chartH(), 22, x => `${fx(x)} ${UT()} ${T('ext.')}` + sp.cs.map(({ c, k }) => `<br><span class="c-${SC(k)}">${xesc(sName(k))} ${sIn(c, fromU(x)) ? tf1(sAt(c, fromU(x))) + ' ' + UT() : T('hors de la courbe')}</span>`).join(''));
     document.querySelectorAll('#s-reads .s-rd').forEach(row => {
       const x = S.simple.xs[+row.dataset.r];
-      row.querySelector('.s-rv').innerHTML = fin(x) && sp ? sp.cs.map(({ c, k }) => (sIn(c, x) ? `<b class="c-${SCOL[k]}">${tf1(sAt(c, x))} ${UT()}</b>` : `<span class="k">${T('hors de la courbe')}</span>`) + ` <span class="k">${xesc(sName(k))}</span>`).join(' · ') : '';
+      row.querySelector('.s-rv').innerHTML = fin(x) && sp ? sp.cs.map(({ c, k }) => (sIn(c, x) ? `<b class="c-${SC(k)}">${tf1(sAt(c, x))} ${UT()}</b>` : `<span class="k">${T('hors de la courbe')}</span>`) + ` <span class="k">${xesc(sName(k))}</span>`).join(' · ') : '';
     });
   }
   // le graphique de la courbe simplifiée suit le défilement quand il tient en entier dans la fenêtre
@@ -4524,12 +4526,12 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
     if (k === 'simple') {
       const ok = S.simple.curves.map((c, i) => ({ c, i })).filter(o => sValid(o.c));
       if (!ok.length) return null;
-      const b = ok.map(({ c, i }) => ({ h: sName(i), table: { head: [T('Point'), T('T° ext. ({0})', [UT()]), T('Départ ({0})', [UT()])], rows: c.t.map((t, j) => [T('Point {0}', [j + 1]), tf1(t), tf1(c.d[j])]), cols: [null, null, SCOL[i]] } }));
+      const b = ok.map(({ c, i }) => ({ h: sName(i), table: { head: [T('Point'), T('T° ext. ({0})', [UT()]), T('Départ ({0})', [UT()])], rows: c.t.map((t, j) => [T('Point {0}', [j + 1]), tf1(t), tf1(c.d[j])]), cols: [null, null, SC(i)] } }));
       const sp = simpleSpec(), xs = S.simple.xs.filter(fin);
-      if (xs.length) b.push({ h: T('Lectures'), table: { head: [T('T° ext. ({0})', [UT()])].concat(ok.map(({ i }) => sName(i))), rows: xs.map(x => [tfx(x)].concat(ok.map(({ c }) => (sIn(c, x) ? tf1(sAt(c, x)) : '—')))), cols: [null].concat(ok.map(({ i }) => SCOL[i])) } });
+      if (xs.length) b.push({ h: T('Lectures'), table: { head: [T('T° ext. ({0})', [UT()])].concat(ok.map(({ i }) => sName(i))), rows: xs.map(x => [tfx(x)].concat(ok.map(({ c }) => (sIn(c, x) ? tf1(sAt(c, x)) : '—')))), cols: [null].concat(ok.map(({ i }) => SC(i))) } });
       const V = sValRows();
-      if (V) b.page2 = [{ h: T('Tableau de valeurs (pas de {0} {1})', [V.st, UT()]), table: { head: [T('T° ext. ({0})', [UT()])].concat(V.ok.map(({ i }) => sName(i))), rows: V.rows.map(r => [tfx(fromU(r.x))].concat(r.d.map(tf1))), cols: [null].concat(V.ok.map(({ i }) => SCOL[i])) } }];
-      b.push({ h: T('Courbe de chauffe'), chart: sp, legend: ok.map(({ i }) => [sName(i), SCOL[i]]), note: T('Axe horizontal : T° extérieure ({0}). Courbes prolongées jusqu\'aux bords avec la pente du premier et du dernier segment.', [UT()]) });
+      if (V) b.page2 = [{ h: T('Tableau de valeurs (pas de {0} {1})', [V.st, UT()]), table: { head: [T('T° ext. ({0})', [UT()])].concat(V.ok.map(({ i }) => sName(i))), rows: V.rows.map(r => [tfx(fromU(r.x))].concat(r.d.map(tf1))), cols: [null].concat(V.ok.map(({ i }) => SC(i))) } }];
+      b.push({ h: T('Courbe de chauffe'), chart: sp, legend: ok.map(({ i }) => [sName(i), SC(i)]), note: T('Axe horizontal : T° extérieure ({0}). Courbes prolongées jusqu\'aux bords avec la pente du premier et du dernier segment.', [UT()]) });
       return b;
     }
     if (k === 'power') {
@@ -4774,8 +4776,8 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
       ok.forEach(({ c, i }) => {
         const { tr, dr, n } = refs[i];
         const xr = { r: `${SQ}!${A(1, tr)}:${A(n, tr)}`, v: c.t.map(t => r1(toU(t))) }, yr = { r: `${SQ}!${A(1, dr)}:${A(n, dr)}`, v: c.d.map(d => r1(toU(d))) };
-        series.push({ kind: 'line', nm: sName(i), c: SCOL[i], axis: 1, x: xr, y: yr });
-        series.push({ kind: 'pts', nm: sName(i), c: SCOL[i], axis: 1, lbl: true, hideLeg: true, x: xr, y: yr });
+        series.push({ kind: 'line', nm: sName(i), c: SC(i), axis: 1, x: xr, y: yr });
+        series.push({ kind: 'pts', nm: sName(i), c: SC(i), axis: 1, lbl: true, hideLeg: true, x: xr, y: yr });
         [[sp.xd.min, 1, 2, 1], [sp.xd.max, n, n - 1, n]].forEach(([xe, p, q, near], side) => {
           const col = 12 + i * 4 + side * 2, Tp = A(p, tr), Tq = A(q, tr), Dp = A(p, dr), Dq = A(q, dr);
           if (!side) rows[c0][col] = { v: sName(i), s: 8 };
@@ -4785,7 +4787,7 @@ label.sw-row{display:flex;align-items:center;gap:10px;cursor:pointer}
           rows[r0 + 1][col] = { f: A(near, tr), v: r1(toU(c.t[near - 1])), s: 0 };
           rows[r0 + 1][col + 1] = { f: A(near, dr), v: r1(toU(c.d[near - 1])), s: 0 };
           const rr = cc => `${SQ}!${A(cc, r0 + 1)}:${A(cc, r0 + 2)}`; // rows[r0] est la ligne r0 + 1
-          series.push({ kind: 'line', nm: sName(i), c: SCOL[i], axis: 1, hideLeg: true, x: { r: rr(col), v: [r1(xe), r1(toU(c.t[near - 1]))] }, y: { r: rr(col + 1), v: [r1(ye), r1(toU(c.d[near - 1]))] } });
+          series.push({ kind: 'line', nm: sName(i), c: SC(i), axis: 1, hideLeg: true, x: { r: rr(col), v: [r1(xe), r1(toU(c.t[near - 1]))] }, y: { r: rr(col + 1), v: [r1(ye), r1(toU(c.d[near - 1]))] } });
         });
       });
       chart = { xml: chartXml(series, markCells(rows, c0, Object.assign({}, sp, { yTitle: T('Départ ({0})', [UT()]) }), SQ, UT()), UT()), anchor: [0, c0, NC, c0 + GH] };
